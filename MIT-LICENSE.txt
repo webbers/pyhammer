@@ -1,4 +1,4 @@
-Copyright 2012 Afonso França
+Copyright 2012 Afonso Franca
 https://github.com/afonsof/pyhammer
 
 Permission is hereby granted, free of charge, to any person obtaining

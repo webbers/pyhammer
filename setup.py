@@ -17,5 +17,5 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.4',
         'Topic :: Software Development :: Build Tools',
-        ]
+        ], requires=['pyhammer']
 )

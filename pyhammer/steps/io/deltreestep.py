@@ -13,10 +13,10 @@ class DelTreeStep(AbstractStep):
         self.reporter.message( "DELTREE: %s" % self.srcDir)
 
         if os.path.exists( self.srcDir ):
-            #try:   
+            try:
                 removeDir( self.srcDir )            
                 return True
-            #except:
+            except:
                 print("error")
                 return False
         else:

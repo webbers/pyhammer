@@ -13,7 +13,7 @@ class ConsoleReporter:
         if not error:
             print(outputMsg)
         else:
-            print >> sys.stderr, outputMsg
+            sys.stderr.write(outputMsg)
 
     def success( self, text ):
         self.message( "SUCCESS: %s" % text )

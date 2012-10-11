@@ -21,8 +21,7 @@ class ApplyVersionStep(AbstractStep):
         major = version.group(1)
         minor = version.group(2)
         build = int(version.group(3))
-        old = version.group(0)
-        new = major + "." + minor + "." + str( build ) # + "." + revision
+        new = major + "." + minor + "." + str( build ) + "." + revision
         
         f = open(self.documentPath, 'r')
         content = f.read()
@@ -32,6 +31,6 @@ class ApplyVersionStep(AbstractStep):
         content = content.replace(old,new)
         
         f = open(self.documentPath, 'w')
-        print >> f, content
+        f.write(content)
         
         return 1

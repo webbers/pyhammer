@@ -18,14 +18,13 @@ class IncrementMinorVersionStep(AbstractStep):
         major = version.group(1)
         minor = int(version.group(2)) + 1
         revision = version.group(3)
-        build = 0
-        
+
         old = version.group(0)
         new = '"' + major + "." + str(minor) + "." + revision + '.0"'
         
         content = content.replace(old,new)
         
         f = open(self.assemblyPath, 'w')
-        print >> f, content
+        f.write(content)
         
         return 1

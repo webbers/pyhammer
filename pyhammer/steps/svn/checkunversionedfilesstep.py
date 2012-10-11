@@ -16,7 +16,7 @@ class CheckUnversionedFilesStep( AbstractStep ):
         for file in files:
             self.reporter.failure( "Arquivo \"" + file + "\" nao versionado" )
             
-        if( len(files) ):
+        if len(files):
             self.reporter.failure( str(len(files)) + " arquivos nao versionados" )
             return 0
             

@@ -2,7 +2,7 @@ from pyhammer.reporters.simplereporter import ConsoleReporter
 from pyhammer.steps.abstractstep import AbstractStep
 
 class Builder(AbstractStep):
-    def __init__( self, name = "", reporter = None, logFileName = None ):
+    def __init__( self, name = "", reporter = None ):
         AbstractStep.__init__( self, name )
         self.__postBuildStep = None
         self.__buildResult = True
@@ -11,10 +11,7 @@ class Builder(AbstractStep):
         if reporter:
             self.reporter = reporter
         else:
-            if logFileName is not None:
-                self.reporter = ConsoleReporter( logFileName )
-            else:
-                self.reporter = ConsoleReporter()
+            self.reporter = ConsoleReporter()
 
     def build( self ):
         self.reporter.message( "STARTING '%s' BUILD:" % self.name )

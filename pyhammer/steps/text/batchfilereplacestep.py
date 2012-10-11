@@ -31,4 +31,3 @@ class BatchFileReplaceStep(AbstractStep):
             return 1
         except:
             return 0
-        return 1

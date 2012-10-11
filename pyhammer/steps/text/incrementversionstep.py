@@ -1,14 +1,12 @@
-import os
 import re
 import subprocess
-
 from pyhammer.steps.abstractstep import AbstractStep
 
-class IncrementProjectVersionStep(AbstractStep):
+class IncrementVersionStep(AbstractStep):
 
-    def __init__( self, projectName, projectRoot ):
-        AbstractStep.__init__( self, "Set Project Version Step" )
-        self.assemblyPath = os.path.abspath( os.path.join( os.path.dirname( __file__ ), '../../../../../src/' + projectName + '/Properties/AssemblyInfo.cs' ) )
+    def __init__( self, assemblyPath, projectRoot ):
+        AbstractStep.__init__( self, "Set Version Step" )
+        self.assemblyPath = assemblyPath
         self.projectRoot = projectRoot
 
     def do( self ):
@@ -31,6 +29,6 @@ class IncrementProjectVersionStep(AbstractStep):
         content = content.replace(old,new)
         
         f = open(self.assemblyPath, 'w')
-        print >> f, content
+        f.write(content)
         
         return 1

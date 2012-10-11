@@ -21,7 +21,7 @@ class SvnCommitDirStep(AbstractStep):
             
         if addResult :
             commitMessage = "Commited by Build"
-            command = "svn commit -m \"%s\"" % ( commitMessage )
+            command = "svn commit -m \"%s\"" % commitMessage
             
             if self.user:
                 command += " --username %s --password %s" % (self.user, self.pwd)

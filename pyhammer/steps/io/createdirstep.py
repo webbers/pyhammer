@@ -10,13 +10,13 @@ class CreateDirStep(AbstractStep):
         self.srcDir = srcDir
         
     def do( self ):
-        self.reporter.message( "CREATE DIR: %s" % ( self.srcDir ) ) 
+        self.reporter.message( "CREATE DIR: %s" % self.srcDir)
 
         if os.path.exists( self.srcDir ):
-            #try:   
+            try:
                 createDir( self.srcDir )            
                 return True
-            #except:
+            except:
                 print("error")
                 return False
         else:

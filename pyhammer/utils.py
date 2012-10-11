@@ -1,10 +1,8 @@
 import os
 import shutil
-
-__author__ = 'afonso.oliveira'
 import subprocess
 
-def WalkDir( root, recurse=0, pattern='*', return_folders=0 ):
+def walkDir( root, recurse=0, pattern='*', return_folders=0 ):
     import fnmatch, os, string
 
     # initialize
@@ -34,11 +32,11 @@ def WalkDir( root, recurse=0, pattern='*', return_folders=0 ):
         # recursively scan other folders, appending results
         if recurse:
             if os.path.isdir(fullname) and not os.path.islink(fullname):
-                result = result + WalkDir( fullname, recurse, pattern, return_folders )
+                result += walkDir(fullname, recurse, pattern, return_folders)
 
     return result
     
-def ExecProg( FilePath, reporter, cwd = None ): 
+def execProg( FilePath, reporter, cwd = None ):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     process = subprocess.Popen( FilePath, cwd=cwd, stdout=subprocess.PIPE, startupinfo=startupinfo )
@@ -47,7 +45,7 @@ def ExecProg( FilePath, reporter, cwd = None ):
         reporter.message( line.replace( "\r\n", "" ) )
     return process.wait()
 
-def copyfile(filename1, filename2):
+def copyFile(filename1, filename2):
     if not os.path.exists(os.path.dirname(filename2)):
         os.makedirs(os.path.dirname(filename2))
     shutil.copy( filename1, os.path.dirname(filename2) )
@@ -65,7 +63,7 @@ def createDir(path):
         cmd = """md -rf "%s" """ % AbsPath
 
     os.system( cmd )
-    return ( os.path.exists( AbsPath ) )
+    return os.path.exists( AbsPath )
 
 def removeDir(path):
     AbsPath = os.path.abspath( path )
@@ -80,7 +78,7 @@ def removeDir(path):
     os.system( cmd )
     return not ( os.path.exists( AbsPath ) )
 
-def movefile(filename1, filename2):
+def moveFile(filename1, filename2):
     if not os.path.exists(os.path.dirname(filename2)):
         os.makedirs(os.path.dirname(filename2))
     shutil.move( filename1, os.path.dirname(filename2) )
@@ -88,7 +86,7 @@ def movefile(filename1, filename2):
     return False
 
 def svnList(path, reporter):
-    list = ExecProg('svn list ' + path, reporter)
+    list = execProg('svn list ' + path, reporter)
     if list == -1:
         print('Erro ao ler o caminho: ' + path)
         return []
