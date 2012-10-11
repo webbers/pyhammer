@@ -10,6 +10,7 @@ parts
 bin
 var
 sdist
+MANIFEST
 develop-eggs
 .installed.cfg
 
@@ -25,3 +26,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#PyCharm
+.idea
