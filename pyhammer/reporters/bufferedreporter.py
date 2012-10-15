@@ -1,7 +1,7 @@
-class BufferedReporter:
+class MemoryReporter:
     def __init__( self ):
-        self.__buffer = ""
-    def message( self, message ):
-        self.__buffer += "\n" + message
-    def getBuffer( self ):
-        return self.__buffer
+        self._memory = ""
+    def message( self, message, error = False ):
+        self._memory += "\n" + message
+    def getText( self ):
+        return self._memory

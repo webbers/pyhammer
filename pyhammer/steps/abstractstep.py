@@ -22,11 +22,6 @@ class AbstractStep:
         self.reporter = reporter
         if self.failureStep is not None:
             self.failureStep.setReporter( reporter )
-        
-    def setData( self, data ):
-        self.data = data
-        if self.failureStep is not None:
-            self.failureStep.setData( data )
-    
+
     def setFailureStep( self, failureStep ):
         self.failureStep = failureStep

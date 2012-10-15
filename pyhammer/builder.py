@@ -40,23 +40,12 @@ class Builder(AbstractStep):
 
     def setPostBuildStep( self, postBuildStep ):
         postBuildStep.setReporter( self.reporter )
-        if self.data and not postBuildStep.getData():
-            postBuildStep.setData( self.data )
         self.__postBuildStep = postBuildStep
 
     def addStep( self, step, ignoreFail = False ):
         step.setReporter( self.reporter )
         step.ignoreFail = ignoreFail
-        if self.data and not step.getData():
-            step.setData( self.data )
         self.__steps.append( step )
-        
-    def setData( self, data ):
-        for step in self.__steps:
-            step.setData( data )
-        if self.__postBuildStep:
-            self.__postBuildStep.setData( data )
-        self.data = data
 
     def getErrorCount( self ):
         return self.__errorCount
