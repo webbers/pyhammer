@@ -1,3 +1,4 @@
+import sys
 from pyhammer.reporters.consolereporter import ConsoleReporter
 from pyhammer.steps.abstractstep import AbstractStep
 
@@ -26,12 +27,19 @@ class Builder(AbstractStep):
     reporter = ConsoleReporter()
 
     @staticmethod
+    def runBuild():
+        step = 'default'
+        if len(sys.argv) > 1:
+            step =sys.argv[1]
+        sys.exit(Builder.build(step)==0)
+
+    @staticmethod
     def build( name = "default" ):
         steps = {}
         Builder.keys = Builder.steps.keys()
 
         if name == "default":
-            for i, stepName in enumerate( steps ):
+            for i, stepName in enumerate( Builder.steps ):
                 if not isinstance(Builder.steps[stepName], MultiTextStep):
                     steps[stepName] = Builder.steps[stepName]
         else:
