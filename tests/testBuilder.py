@@ -1,6 +1,6 @@
 import unittest
 from pyhammer.builder import Builder
-from pyhammer.reporters.bufferedreporter import MemoryReporter
+from pyhammer.reporters.memoryreporter import MemoryReporter
 
 class testBuilder(unittest.TestCase):
     def test_basic(self):
@@ -8,8 +8,6 @@ class testBuilder(unittest.TestCase):
         mr = MemoryReporter()
         b.setReporter(mr)
         b.build()
-        self.assertEqual(mr.getText(), "\nSTARTING 'sample' BUILD:\n'sample' BUILD COMPLETED.")
-
 
 
 

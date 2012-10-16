@@ -1,6 +1,6 @@
 import unittest
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.reporters.bufferedreporter import MemoryReporter
+from pyhammer.reporters.memoryreporter import MemoryReporter
 from tests.utils import ApproveStep, ReportStep
 
 class testAbstractStep(unittest.TestCase):
@@ -35,3 +35,6 @@ class testAbstractStep(unittest.TestCase):
 
         self.assertFalse(step.build())
         self.assertEqual(reporter.getText(), '\nok')
+
+if __name__ == '__main__':
+    unittest.main()

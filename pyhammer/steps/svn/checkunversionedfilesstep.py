@@ -1,7 +1,7 @@
 import re
 from pyhammer.reporters.bufferedreporter import BufferedReporter
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class CheckUnversionedFilesStep( AbstractStep ):
     def __init__( self, baseDir ):
@@ -10,7 +10,7 @@ class CheckUnversionedFilesStep( AbstractStep ):
 
     def build( self ):
         br = BufferedReporter()
-        ExecProg( "svn status " + self.__baseDir, br, self.__baseDir )
+        execProg( "svn status " + self.__baseDir, br, self.__baseDir )
         
         files = re.findall('\?\s+([^\n]+)\n', br.getBuffer() )
         for file in files:

@@ -1,5 +1,5 @@
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class SvnCommitDirStep(AbstractStep):
     """Svn Commit Dir Step"""
@@ -17,7 +17,7 @@ class SvnCommitDirStep(AbstractStep):
         addResult = True
         if self.add:
             command = "svn add --force *.*"
-            addResult = ExecProg( command, self.reporter, self.dir ) == 0
+            addResult = execProg( command, self.reporter, self.dir ) == 0
             
         if addResult :
             commitMessage = "Commited by Build"
@@ -26,5 +26,5 @@ class SvnCommitDirStep(AbstractStep):
             if self.user:
                 command += " --username %s --password %s" % (self.user, self.pwd)
             self.reporter.message( "SVN COMMIT DIR: %s" % self.dir )
-            return ExecProg( command, self.reporter, self.dir ) == 0
+            return execProg( command, self.reporter, self.dir ) == 0
         return False

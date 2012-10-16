@@ -1,5 +1,5 @@
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class CsProjectBuildStep(AbstractStep):
     """Cs Project Build Step"""
@@ -13,5 +13,5 @@ class CsProjectBuildStep(AbstractStep):
 
     def do( self ):
         self.reporter.message( "BUILD CS PROJECT: %s" % self.csProjectPath )
-        return ExecProg( self.command, self.reporter ) == 0
+        return execProg( self.command, self.reporter ) == 0
     

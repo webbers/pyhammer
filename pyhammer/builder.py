@@ -1,51 +1,76 @@
-from pyhammer.reporters.simplereporter import ConsoleReporter
+from pyhammer.reporters.consolereporter import ConsoleReporter
 from pyhammer.steps.abstractstep import AbstractStep
 
-class Builder(AbstractStep):
-    def __init__( self, name = "", reporter = None ):
-        AbstractStep.__init__( self, name )
-        self.__postBuildStep = None
-        self.__buildResult = True
-        self.__errorCount = 0
-        self.__steps = []
-        if reporter:
-            self.reporter = reporter
-        else:
-            self.reporter = ConsoleReporter()
+class MultiTextStep(AbstractStep):
 
-    def build( self ):
-        self.reporter.message( "STARTING '%s' BUILD:" % self.name )
-        for i, step in enumerate( self.__steps ):
-            self.reporter.message( "RUNNING STEP '%s' (step %d of %d):" % ( step.name, i+1, len( self.__steps ) ) )
+    def __init__( self, text ):
+        AbstractStep.__init__( self, "Multi Step" )
+        self.text = text
+
+    def do( self ):
+        Builder.keys = Builder.steps.keys()
+
+        items = self.text.split(" ")
+
+        for i, stepName in enumerate( items ):
+            if not Builder.build(stepName):
+                return False
+        return True
+
+class Builder(AbstractStep):
+    __postBuildStep = None
+    __buildResult = True
+    __errorCount = 0
+    __keys = []
+    steps = {}
+    reporter = ConsoleReporter()
+
+    @staticmethod
+    def build( name = "default" ):
+        steps = {}
+        Builder.keys = Builder.steps.keys()
+
+        if name == "default":
+            for i, stepName in enumerate( steps ):
+                if not isinstance(Builder.steps[stepName], MultiTextStep):
+                    steps[stepName] = Builder.steps[stepName]
+        else:
+            if any(name in k for k in Builder.keys):
+                steps[name] = Builder.steps[name]
+
+        if len(steps) == 0:
+            Builder.reporter.failure("Step \"%s\" not found" % name)
+            return 0
+
+        for i, stepName in enumerate( steps ):
+            step = steps[stepName]
+            stepType = step.__class__.__name__
+            Builder.reporter.message( "Running '%s (%s)' step (%d of %d):" % ( stepName, stepType, i+1, len( steps ) ) )
 
             if step.build():
-                self.reporter.success( "STEP '%s' COMPLETED" % step.name )
-                self.reporter.message( "------------------------------------------------------------" )
+                Builder.reporter.success( "STEP '%s (%s)' COMPLETED" % ( stepName, stepType ) )
             else:
-                self.reporter.failure( "STEP '%s' FAILED" % step.name )
-                self.reporter.message( "------------------------------------------------------------" )
-                self.__buildResult = False
-                self.__errorCount += 1
+                Builder.reporter.failure( "STEP '%s (%s)' FAILED"% ( stepName, stepType ) )
+                Builder.__buildResult = False
+                Builder.__errorCount += 1
                 if not step.ignoreFail:
-                    self.reporter.failure( "'%s' BUILD FAILED." % self.name )
+                    Builder.reporter.failure( "BUILD FAILED" )
                     return False
         
-        if self.__postBuildStep:
-            if self.__buildResult:
-                self.__postBuildStep.build()
-        
-        self.reporter.message( "'%s' BUILD COMPLETED." % self.name, not self.__buildResult )
-        
-        return self.__buildResult
+        if Builder.__postBuildStep:
+            if Builder.__buildResult:
+                Builder.__postBuildStep.build()
+        return Builder.__buildResult
 
-    def setPostBuildStep( self, postBuildStep ):
-        postBuildStep.setReporter( self.reporter )
-        self.__postBuildStep = postBuildStep
+    @staticmethod
+    def addStep( name, step, ignoreFail = False ):
+        if not isinstance(step, str):
+            step.setReporter( Builder.reporter )
+            step.ignoreFail = ignoreFail
+        else:
+            step = MultiTextStep(step)
+        Builder.steps[name] = step
 
-    def addStep( self, step, ignoreFail = False ):
-        step.setReporter( self.reporter )
-        step.ignoreFail = ignoreFail
-        self.__steps.append( step )
-
+    @staticmethod
     def getErrorCount( self ):
         return self.__errorCount

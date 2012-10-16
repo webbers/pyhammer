@@ -1,5 +1,5 @@
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class SvnCreateCustomTagDirStep(AbstractStep):
     """Svn Create Tag Dir Step"""
@@ -15,4 +15,4 @@ class SvnCreateCustomTagDirStep(AbstractStep):
         self.reporter.message( "TAG DIR: %s" % self.dirTag )        
         commitMessage = "Created by Build"
         command = 'svn copy ' + self.dirTrunk + ' ' + self.dirTag + ' -m \"'+commitMessage+'\"'
-        return ExecProg( command, self.reporter, self.dirTrunk ) == 0
+        return execProg( command, self.reporter, self.dirTrunk ) == 0

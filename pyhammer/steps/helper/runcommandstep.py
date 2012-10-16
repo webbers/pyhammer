@@ -1,5 +1,5 @@
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class RunCommandStep(AbstractStep):
     """Cs UnitTest Step"""
@@ -11,7 +11,7 @@ class RunCommandStep(AbstractStep):
 
     def do( self ):
         self.reporter.message( "RUN COMMAND: %s" % self.command )
-        result = ExecProg( self.command, self.reporter, self.path) == 0
+        result = execProg( self.command, self.reporter, self.path) == 0
         return result
 
 

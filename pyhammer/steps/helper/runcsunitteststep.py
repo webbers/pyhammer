@@ -1,6 +1,6 @@
 import os
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class RunCsUnitTestStep(AbstractStep):
     """Cs UnitTest Step"""
@@ -20,7 +20,7 @@ class RunCsUnitTestStep(AbstractStep):
 
         print(self.command)
 
-        result = ExecProg( self.command, self.reporter, os.path.dirname(self.csTestDllPath) ) == 0
+        result = execProg( self.command, self.reporter, os.path.dirname(self.csTestDllPath) ) == 0
         return result
 
 

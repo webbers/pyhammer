@@ -1,5 +1,5 @@
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class SvnImportDirStep(AbstractStep):
     """Svn Commit Dir Step"""
@@ -15,4 +15,4 @@ class SvnImportDirStep(AbstractStep):
         commitMessage = "Commited by Build"
         command = "svn import -m \"%s\" \"%s\" \"%s\" " % ( commitMessage, self.dir, self.repo )
         self.reporter.message( "SVN IMPORT DIR: %s" % self.dir )
-        return ExecProg( command, self.reporter, self.dir ) == 0
+        return execProg( command, self.reporter, self.dir ) == 0

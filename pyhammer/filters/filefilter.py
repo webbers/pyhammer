@@ -1,6 +1,6 @@
 import os
 import fnmatch
-from pyhammer.utils import WalkDir
+from pyhammer.utils import walkDir
 
 
 class FileFilter:
@@ -18,7 +18,7 @@ class FileFilter:
         self.ExtPtnFlag = ExtPtnFlag
         
     def Filter( self, Dir, Recurvise = True ):
-        Files = WalkDir( Dir, Recurvise )
+        Files = walkDir( Dir, Recurvise )
         FilteredFiles = []
         for fp in Files:
             if self.IsValidFile( fp, Dir ):

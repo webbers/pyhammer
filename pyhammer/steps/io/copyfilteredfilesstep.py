@@ -1,4 +1,4 @@
-from pyhammer.steps.copyfilesstep import CopyFilesStep
+from pyhammer.steps.io.copyfilesstep import CopyFilesStep
 
 class CopyFilteredFilesStep(CopyFilesStep):
     """Copy Filtered Files Step"""

@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 
-def walkDir( root, recurse=0, pattern='*', return_folders=0 ):
+def walkDir( root, recursive=0, pattern='*', return_folders=0 ):
     import fnmatch, os, string
 
     # initialize
@@ -16,7 +16,7 @@ def walkDir( root, recurse=0, pattern='*', return_folders=0 ):
 
     # expand pattern
     pattern = pattern or '*'
-    pat_list = string.splitfields( pattern , ';' )
+    pat_list = pattern.split(';')
 
     # check each file
     for name in names:
@@ -30,9 +30,9 @@ def walkDir( root, recurse=0, pattern='*', return_folders=0 ):
                 continue
 
         # recursively scan other folders, appending results
-        if recurse:
+        if recursive:
             if os.path.isdir(fullname) and not os.path.islink(fullname):
-                result += walkDir(fullname, recurse, pattern, return_folders)
+                result += walkDir(fullname, recursive, pattern, return_folders)
 
     return result
     
@@ -42,8 +42,18 @@ def execProg( FilePath, reporter, cwd = None ):
     process = subprocess.Popen( FilePath, cwd=cwd, stdout=subprocess.PIPE, startupinfo=startupinfo )
     lines = process.stdout.readlines()
     for line in lines:
-        reporter.message( line.replace( "\r\n", "" ) )
+        reporter.message( line.decode("utf-8").replace('\r\n', '') )
     return process.wait()
+
+def execProg2( FilePath, cwd = None ):
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    process = subprocess.Popen( FilePath, cwd=cwd, stdout=subprocess.PIPE, startupinfo=startupinfo )
+    items = []
+    lines = process.stdout.readlines()
+    for line in lines:
+        items.append(line.decode("utf-8").replace('\r\n', ''))
+    return items
 
 def copyFile(filename1, filename2):
     if not os.path.exists(os.path.dirname(filename2)):
@@ -86,8 +96,17 @@ def moveFile(filename1, filename2):
     return False
 
 def svnList(path, reporter):
-    list = execProg('svn list ' + path, reporter)
-    if list == -1:
-        print('Erro ao ler o caminho: ' + path)
-        return []
-    return list
+    items = execProg2('svn list ' + path)
+
+    if isList(items):
+        return items
+
+    reporter.failure('Error reading path: ' + path)
+    return items
+
+def isList(items):
+    return isinstance(items, (list, tuple))
+
+def execfile(file):
+    with open(file, "r") as fh:
+        exec(fh.read()+"\n")

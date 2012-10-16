@@ -1,6 +1,6 @@
 import os
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import copyfile
+from pyhammer.utils import copyFile
 
 class CopyFilesStep(AbstractStep):
     """Copy Files Step"""
@@ -20,7 +20,7 @@ class CopyFilesStep(AbstractStep):
             destPath = os.path.realpath( self.destDir ) + relPath
             self.reporter.message(fp)
            
-            if not copyfile( fp, destPath ):
+            if not copyFile( fp, destPath ):
                 self.reporter.failure("copying %s to %s" % (fp, destPath))
                 return False  
         return True

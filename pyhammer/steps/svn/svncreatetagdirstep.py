@@ -1,6 +1,6 @@
 import re
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import ExecProg
+from pyhammer.utils import execProg
 
 class SvnCreateTagDirStep(AbstractStep):
     """Svn Create Tag Dir Step"""
@@ -26,4 +26,4 @@ class SvnCreateTagDirStep(AbstractStep):
 
         self.reporter.message( "COMMAND: %s" % command )
         
-        return ExecProg( command, self.reporter ) == 0
+        return execProg( command, self.reporter ) == 0
