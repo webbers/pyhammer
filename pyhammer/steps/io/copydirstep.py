@@ -1,4 +1,5 @@
 import distutils
+import shutil
 from pyhammer.steps.abstractstep import AbstractStep
 
 class CopyDirStep(AbstractStep):
@@ -12,4 +13,4 @@ class CopyDirStep(AbstractStep):
         
     def do( self ):
         self.reporter.message( "COPY DIR: %s => %s" % ( self.srcDir, self.destDir ) )        
-        return distutils.dir_util.copy_tree( self.srcDir, self.destDir )
+        return shutil.copytree( self.srcDir, self.destDir )

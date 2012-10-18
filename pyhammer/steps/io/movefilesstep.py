@@ -1,6 +1,6 @@
 import os
 from pyhammer.steps.abstractstep import AbstractStep
-from pyhammer.utils import movefile
+from pyhammer.utils import moveFile
 
 class MoveFilesStep(AbstractStep):
     """Move Files Step"""
@@ -20,7 +20,7 @@ class MoveFilesStep(AbstractStep):
             destPath = os.path.realpath( self.destDir ) + relPath
             self.reporter.message(fp)
            
-            if not movefile( fp, destPath ):
+            if not moveFile( fp, destPath ):
                 self.reporter.failure("move %s to %s" % (fp, destPath))
                 return False  
         return True

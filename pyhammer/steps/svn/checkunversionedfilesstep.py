@@ -1,5 +1,5 @@
 import re
-from pyhammer.reporters.bufferedreporter import BufferedReporter
+from pyhammer.reporters.memoryreporter import MemoryReporter
 from pyhammer.steps.abstractstep import AbstractStep
 from pyhammer.utils import execProg
 
@@ -9,10 +9,10 @@ class CheckUnversionedFilesStep( AbstractStep ):
         self.__baseDir = baseDir
 
     def build( self ):
-        br = BufferedReporter()
+        br = MemoryReporter()
         execProg( "svn status " + self.__baseDir, br, self.__baseDir )
         
-        files = re.findall('\?\s+([^\n]+)\n', br.getBuffer() )
+        files = re.findall('\?\s+([^\n]+)\n', br.getText() )
         for file in files:
             self.reporter.failure( "Arquivo \"" + file + "\" nao versionado" )
             

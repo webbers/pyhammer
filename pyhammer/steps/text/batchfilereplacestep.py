@@ -18,9 +18,9 @@ class BatchFileReplaceStep(AbstractStep):
             f.close()
             
             for i, sentence in enumerate( self.__sentences ):
-                oldcontent = content
+                oldContent = content
                 content = content.replace( sentence[0], sentence[1] )
-                if oldcontent == content:
+                if oldContent == content:
                     self.reporter.failure( 'Nao foi possivel encontrar a string' + sentence[0] )
                     return 0
                 

@@ -1,34 +1,70 @@
 import re
-import subprocess
 from pyhammer.steps.abstractstep import AbstractStep
 
 class IncrementVersionStep(AbstractStep):
 
-    def __init__( self, assemblyPath, projectRoot ):
+    def __init__( self, assemblyPath, type, blockCount = 4 ):
         AbstractStep.__init__( self, "Set Version Step" )
-        self.assemblyPath = assemblyPath
-        self.projectRoot = projectRoot
+        self.__assemblyPath = assemblyPath
+        self.__type = type
+        self.__blockCount = blockCount
 
     def do( self ):
-        process = subprocess.Popen( "svnversion", cwd=self.projectRoot, stdout=subprocess.PIPE )
-        revision = re.search( '\d+', process.stdout.readline() ).group(0)
-        
-        f = open(self.assemblyPath, 'r')
+        f = open(self.__assemblyPath, 'r')
         content = f.read()
         f.close()
-        
-        version = re.search( '"(\d+)\.(\d+)\.(\d+)\.(\d+)"', content )
-        
-        major = version.group(1)
-        minor = version.group(2)
-        build = int(version.group(3)) + 1
-        
-        old = version.group(0)
-        new = '"' + major + "." + minor + "." + str( build ) + "." + revision + '"'
+
+        new = ""
+
+        if self.__blockCount == 4:
+            version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+
+            if not version:
+                self.reporter.failure("Can not found version in file: %s" % self.__assemblyPath)
+
+            major = int(version.group(1))
+            minor = int(version.group(2))
+            revis = int(version.group(3))
+            build = int(version.group(4))
+            old = version.group(0)
+
+            if self.__type == "minor":
+                minor += 1
+            elif self.__type == "revision":
+                revis += 1
+            elif self.__type == "build":
+                build += 1
+            else:
+                self.reporter.failure("Version block not found: %s" % self.__type)
+                return False
+
+            new = str(major) + "." + str(minor) + "." + str(revis) + "." + str(build)
+
+        elif self.__blockCount == 3:
+            version = re.search( '(\d+)\.(\d+)\.(\d+)', content )
+
+            if not version:
+                self.reporter.failure("Can not found version in file: %s" % self.__assemblyPath)
+
+            major = int(version.group(1))
+            minor = int(version.group(2))
+            revis = int(version.group(3))
+            old = version.group(0)
+
+            if self.__type == "minor":
+                minor += 1
+            elif self.__type == "revision":
+                revis += 1
+            else:
+                self.reporter.failure("Version block not found: %s" % self.__type)
+                return False
+
+            new = str(major) + "." + str(minor) + "." + str(revis)
         
         content = content.replace(old,new)
         
-        f = open(self.assemblyPath, 'w')
+        f = open(self.__assemblyPath, 'w')
         f.write(content)
+        f.close()
         
-        return 1
+        return True

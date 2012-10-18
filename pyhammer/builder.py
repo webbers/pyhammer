@@ -38,13 +38,8 @@ class Builder(AbstractStep):
         steps = {}
         Builder.keys = Builder.steps.keys()
 
-        if name == "default":
-            for i, stepName in enumerate( Builder.steps ):
-                if not isinstance(Builder.steps[stepName], MultiTextStep):
-                    steps[stepName] = Builder.steps[stepName]
-        else:
-            if any(name in k for k in Builder.keys):
-                steps[name] = Builder.steps[name]
+        if any(name in k for k in Builder.keys):
+            steps[name] = Builder.steps[name]
 
         if len(steps) == 0:
             Builder.reporter.failure("Step \"%s\" not found" % name)

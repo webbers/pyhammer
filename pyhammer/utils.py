@@ -1,10 +1,9 @@
 import os
 import shutil
 import subprocess
+import fnmatch
 
 def walkDir( root, recursive=0, pattern='*', return_folders=0 ):
-    import fnmatch, os, string
-
     # initialize
     result = []
 

@@ -2,7 +2,7 @@ import os
 import sys
 from pyhammer.builder import Builder
 from pyhammer.filters.pythonfilefilter import PythonFileFilter
-from pyhammer.steps.helper.runcommandstep import RunCommandStep
+from pyhammer.steps.helpers.runcommandstep import RunCommandStep
 from pyhammer.steps.io.copyfilteredfilesstep import CopyFilteredFilesStep
 from pyhammer.steps.io.deltreestep import DelTreeStep
 
@@ -16,7 +16,7 @@ Builder.addStep( "unittests", RunCommandStep('python -m unittest discover tests'
 Builder.addStep( "deltree", DelTreeStep( pubDir ) )
 Builder.addStep( "copyfiles", CopyFilteredFilesStep( PythonFileFilter(), srcDir, pubDir ) )
 
-Builder.addStep( "ps", "unittests deltree copyfiles")
+Builder.addStep( "ps", "unittests deltree")
 Builder.addStep( "ci", "unittests deltree copyfiles")
 
 Builder.build(sys.argv[1])

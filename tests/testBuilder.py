@@ -9,9 +9,9 @@ class DummyStep(AbstractStep):
         return True
 
 class testBuilder(unittest.TestCase):
-    '''def test_basic(self):
+    def test_basic(self):
         Builder.addStep('default', DummyStep())
-        Builder.build('default')'''
+        Builder.build('default')
 
     def test_no_default(self):
         Builder.addStep('dummy', DummyStep())
