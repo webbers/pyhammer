@@ -1,10 +1,7 @@
-class AbstractStep:
-    """Abstract Step"""
-    
-    def __init__( self, name ):
+class TaskBase:
+    def __init__( self ):
         self.reporter = None
         self.data = None
-        self.name = name
         self.ignoreFail = False
         self.failureStep = None
 

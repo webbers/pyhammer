@@ -1,12 +1,12 @@
 import os
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
-class RunCsUnitTestStep(AbstractStep):
+class MsTestTask(TaskBase):
     """Cs UnitTest Step"""
 
     def __init__( self, csTestDllPath ):
-        AbstractStep.__init__( self, "Cs UnitTest" )
+        super().__init__()
         
         msTestPath = "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE"
         if os.path.isdir(msTestPath) == 0:

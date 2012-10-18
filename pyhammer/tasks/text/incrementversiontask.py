@@ -1,10 +1,10 @@
 import re
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 
-class IncrementVersionStep(AbstractStep):
+class IncrementVersionTask(TaskBase):
 
     def __init__( self, assemblyPath, type, blockCount = 4 ):
-        AbstractStep.__init__( self, "Set Version Step" )
+        super().__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
         self.__blockCount = blockCount
@@ -15,6 +15,7 @@ class IncrementVersionStep(AbstractStep):
         f.close()
 
         new = ""
+        old = ""
 
         if self.__blockCount == 4:
             version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )

@@ -54,39 +54,6 @@ def execProg2( FilePath, cwd = None ):
         items.append(line.decode("utf-8").replace('\r\n', ''))
     return items
 
-def copyFile(filename1, filename2):
-    if not os.path.exists(os.path.dirname(filename2)):
-        os.makedirs(os.path.dirname(filename2))
-    shutil.copy( filename1, os.path.dirname(filename2) )
-    if os.path.isfile (filename2): return True
-    return False
-
-def createDir(path):
-    AbsPath = os.path.abspath( path )
-    if os.path.exists( AbsPath ):
-        return False
-
-    if os.name == "nt":
-        cmd = """mkdir /S /Q "%s" """ % AbsPath
-    else:
-        cmd = """md -rf "%s" """ % AbsPath
-
-    os.system( cmd )
-    return os.path.exists( AbsPath )
-
-def removeDir(path):
-    AbsPath = os.path.abspath( path )
-    if not os.path.exists( AbsPath ):
-        return False
-
-    if os.name == "nt":
-        cmd = """rmdir /S /Q "%s" """ % AbsPath
-    else:
-        cmd = """rm -rf "%s" """ % AbsPath
-
-    os.system( cmd )
-    return not ( os.path.exists( AbsPath ) )
-
 def moveFile(filename1, filename2):
     if not os.path.exists(os.path.dirname(filename2)):
         os.makedirs(os.path.dirname(filename2))

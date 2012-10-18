@@ -1,12 +1,12 @@
 import os
-from pyhammer.steps.text.incrementversionstep import IncrementVersionStep
+from pyhammer.tasks.text.incrementversiontask import IncrementVersionTask
 from pyhammer.builder import Builder
 from pyhammer.filters.pythonfilefilter import PythonFileFilter
-from pyhammer.steps.helpers.runcommandstep import RunCommandStep
-from pyhammer.steps.io.copyfilteredfilesstep import CopyFilteredFilesStep
-from pyhammer.steps.io.deltreestep import DelTreeStep
-from pyhammer.steps.svn.svndeletestep import SvnDeleteStep
-from pyhammer.steps.svn.svnimportdirstep import SvnImportDirStep
+from pyhammer.tasks.helpers.commandtask import CommandTask
+from pyhammer.tasks.io.copytask import CopyTask
+from pyhammer.tasks.io.deletetask import DeleteTask
+from pyhammer.tasks.svn.svndeletetask import SvnDeleteTask
+from pyhammer.tasks.svn.svnimporttask import SvnImportTask
 
 #-Paths-----------------------------------------------------------------------------------------------------------------
 rootDir = os.path.join( os.getcwd(), '..' )
@@ -16,20 +16,20 @@ srcDir = os.path.join( os.getcwd(), '../pyhammer' )
 versionFile = os.path.join( os.getcwd(), '../setup.py' )
 repoUrl = 'http://cronos:9090/gasrd/Web/pub/pyhammer/trunk'
 
-#-Steps-----------------------------------------------------------------------------------------------------------------
-Builder.addStep( "unittests", RunCommandStep('python -m unittest discover tests', rootDir) )
-Builder.addStep( "del-pub", DelTreeStep( pubDir ) )
-Builder.addStep( "copyfiles", CopyFilteredFilesStep( PythonFileFilter(), srcDir, pubDir ) )
-Builder.addStep( "svndelete", SvnDeleteStep(repoUrl))
-Builder.addStep( "svnimport", SvnImportDirStep( pubDir, repoUrl ) )
-Builder.addStep( "pip-upload", RunCommandStep( 'python setup.py sdist upload', rootDir ) )
-Builder.addStep( "increment-rev", IncrementVersionStep(versionFile, "revision", 3))
-Builder.addStep( "increment-min", IncrementVersionStep(versionFile, "minor", 3))
+#-Tasks-----------------------------------------------------------------------------------------------------------------
+Builder.addTask( "unittests", CommandTask('python -m unittest discover tests', rootDir) )
+Builder.addTask( "del-pub", DeleteTask( pubDir ) )
+Builder.addTask( "copyfiles", CopyTask( srcDir, pubDir, PythonFileFilter() ) )
+Builder.addTask( "svndelete", SvnDeleteTask(repoUrl))
+Builder.addTask( "svnimport", SvnImportTask( pubDir, repoUrl ) )
+Builder.addTask( "pip-upload", CommandTask( 'python setup.py sdist upload', rootDir ) )
+Builder.addTask( "increment-rev", IncrementVersionTask(versionFile, "revision", 3))
+Builder.addTask( "increment-min", IncrementVersionTask(versionFile, "minor", 3))
 
-#-Root steps------------------------------------------------------------------------------------------------------------
-Builder.addStep( "ps", "unittests")
-Builder.addStep( "ci", "unittests del-pub copyfiles svndelete svnimport del-pub")
-Builder.addStep( "publish-rev", "unittests increment-rev pip-upload")
-Builder.addStep( "publish-min", "unittests increment-min pip-upload")
+#-Root tasks------------------------------------------------------------------------------------------------------------
+Builder.addTask( "ps", "unittests")
+Builder.addTask( "ci", "del-pub copyfiles svndelete svnimport del-pub")
+Builder.addTask( "publish-rev", "unittests increment-rev pip-upload")
+Builder.addTask( "publish-min", "unittests increment-min pip-upload")
 
 Builder.runBuild()

@@ -1,11 +1,11 @@
 import sys
 from pyhammer.reporters.consolereporter import ConsoleReporter
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 
-class MultiTextStep(AbstractStep):
+class MultiTask(TaskBase):
 
     def __init__( self, text ):
-        AbstractStep.__init__( self, "Multi Step" )
+        super().__init__()
         self.text = text
 
     def do( self ):
@@ -18,7 +18,7 @@ class MultiTextStep(AbstractStep):
                 return False
         return True
 
-class Builder(AbstractStep):
+class Builder(TaskBase):
     __postBuildStep = None
     __buildResult = True
     __errorCount = 0
@@ -66,12 +66,12 @@ class Builder(AbstractStep):
         return Builder.__buildResult
 
     @staticmethod
-    def addStep( name, step, ignoreFail = False ):
+    def addTask( name, step, ignoreFail = False ):
         if not isinstance(step, str):
             step.setReporter( Builder.reporter )
             step.ignoreFail = ignoreFail
         else:
-            step = MultiTextStep(step)
+            step = MultiTask(step)
         Builder.steps[name] = step
 
     @staticmethod

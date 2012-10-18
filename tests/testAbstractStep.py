@@ -1,5 +1,5 @@
 import unittest
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.reporters.memoryreporter import MemoryReporter
 from tests.utils import ApproveStep, ReportStep
 
@@ -9,7 +9,7 @@ class testAbstractStep(unittest.TestCase):
         self.seq = range(10)
 
     def test_fail(self):
-        step = AbstractStep('sample')
+        step = TaskBase()
         self.assertFalse(step.build())
 
     def test_success(self):
@@ -24,7 +24,7 @@ class testAbstractStep(unittest.TestCase):
         self.assertEqual(reporter.getText(), '\nok')
 
     def test_failureStep(self):
-        step = AbstractStep('sample')
+        step = TaskBase()
         reporter = MemoryReporter()
         reportStep = ReportStep()
         step.setFailureStep(reportStep)

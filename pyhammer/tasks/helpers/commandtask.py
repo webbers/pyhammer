@@ -1,11 +1,11 @@
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
-class RunCommandStep(AbstractStep):
+class CommandTask(TaskBase):
     """Cs UnitTest Step"""
 
     def __init__( self, command, path = None):
-        AbstractStep.__init__( self, "Run Command" )
+        super().__init__()
         self.path = path
         self.command = command
 

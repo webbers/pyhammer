@@ -1,14 +1,14 @@
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 
-class ApproveStep(AbstractStep):
+class ApproveStep(TaskBase):
     def __init__(self):
-        AbstractStep.__init__(self, "ApproveStep")
+        super().__init__()
     def do( self ):
         return True
 
-class ReportStep(AbstractStep):
+class ReportStep(TaskBase):
     def __init__(self):
-        AbstractStep.__init__(self, "ReportStep")
+        super().__init__()
     def do( self ):
         self.reporter.message('ok')
         return True

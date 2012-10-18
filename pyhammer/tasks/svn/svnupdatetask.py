@@ -1,11 +1,11 @@
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
-class SvnUpdateDirStep(AbstractStep):
+class SvnUpdateTask(TaskBase):
     """Svn Update Dir Step"""
 
     def __init__( self, dir ):
-        AbstractStep.__init__( self, "Svn Update Dir" )
+        super().__init__()
         self.dir = dir
 
     def do( self ):

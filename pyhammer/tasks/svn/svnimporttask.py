@@ -1,11 +1,11 @@
-from pyhammer.steps.abstractstep import AbstractStep
+from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
-class SvnImportDirStep(AbstractStep):
+class SvnImportTask(TaskBase):
     """Svn Commit Dir Step"""
 
     def __init__( self, dir, repo ):
-        AbstractStep.__init__( self, "Svn Import Dir" )
+        super().__init__()
         
         self.dir = dir
         self.repo = repo
