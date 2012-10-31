@@ -21,9 +21,8 @@ class CopyTask(TaskBase):
         reporter.message( "Copying files: %s => %s" % ( srcDir, destDir ) )
         for fp in files:
             relPath = fp.lower().replace( os.path.realpath( srcDir ).lower(), "" )
-            destPath = os.path.realpath( destDir ) + relPath
+            destPath = os.path.normpath(destDir + relPath)
             reporter.message(fp)
-
             if not os.path.exists(os.path.dirname(destPath)):
                 os.makedirs(os.path.dirname(destPath))
 

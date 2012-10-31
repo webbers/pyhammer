@@ -48,11 +48,10 @@ class Builder(TaskBase):
         for i, stepName in enumerate( steps ):
             step = steps[stepName]
             stepType = step.__class__.__name__
-            Builder.reporter.message( "Running '%s (%s)' step (%d of %d):" % ( stepName, stepType, i+1, len( steps ) ) )
+            Builder.reporter.message( "" )
+            Builder.reporter.message( "Running '%s (%s)'" % ( stepName, stepType ) )
 
-            if step.build():
-                Builder.reporter.success( "STEP '%s (%s)' COMPLETED" % ( stepName, stepType ) )
-            else:
+            if not step.build():
                 Builder.reporter.failure( "STEP '%s (%s)' FAILED"% ( stepName, stepType ) )
                 Builder.__buildResult = False
                 Builder.__errorCount += 1

@@ -31,6 +31,7 @@ class IncrementVersionTask(TaskBase):
 
             if self.__type == "minor":
                 minor += 1
+                revis = 0
             elif self.__type == "revision":
                 revis += 1
             elif self.__type == "build":
@@ -45,7 +46,7 @@ class IncrementVersionTask(TaskBase):
             version = re.search( '(\d+)\.(\d+)\.(\d+)', content )
 
             if not version:
-                self.reporter.failure("Can not found version in file: %s" % self.__assemblyPath)
+                self.reporter.failure( "Can not found version in file: %s" % self.__assemblyPath )
 
             major = int(version.group(1))
             minor = int(version.group(2))
@@ -54,6 +55,7 @@ class IncrementVersionTask(TaskBase):
 
             if self.__type == "minor":
                 minor += 1
+                revis = 0
             elif self.__type == "revision":
                 revis += 1
             else:
@@ -63,6 +65,8 @@ class IncrementVersionTask(TaskBase):
             new = str(major) + "." + str(minor) + "." + str(revis)
         
         content = content.replace(old,new)
+
+        self.reporter.message("Changing from version %s to %s" % ( old, new ) )
         
         f = open(self.__assemblyPath, 'w')
         f.write(content)

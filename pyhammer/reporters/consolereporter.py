@@ -8,8 +8,8 @@ class ConsoleReporter:
         
     def message( self, text, error = False ):
         now = datetime.datetime.now()
-        outputMsg = "%s: %s" % ( now.strftime("%d/%m/%Y %H:%M:%S"), text )
-        
+        outputMsg = text
+
         if not error:
             print(outputMsg)
         else:
