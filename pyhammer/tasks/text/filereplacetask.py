@@ -1,18 +1,16 @@
 from pyhammer.tasks.taskbase import TaskBase
 
 class FileReplaceTask(TaskBase):
-    """File Replace Step"""
-
     def __init__( self, filename ):
         super().__init__()
-        self.filename = filename
+        self.__filename = filename
         self.__sentences = []
     
     def addSentence( self, find, replace ):
         self.__sentences.append( [ find, replace] )
     
     def do( self ):
-        f = open( self.filename, 'r' )
+        f = open( self.__filename, 'r' )
         content = f.read()
         f.close()
 
@@ -23,7 +21,7 @@ class FileReplaceTask(TaskBase):
                 self.reporter.failure( 'Nao foi possivel encontrar a string' + sentence[0] )
                 return 0
 
-        f = open( self.filename, 'w' )
+        f = open( self.__filename, 'w' )
         f.write( content )
         f.close()
         return True

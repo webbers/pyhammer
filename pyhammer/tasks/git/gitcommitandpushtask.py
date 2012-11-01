@@ -2,13 +2,11 @@ from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
 class GitCommitAndPushTask(TaskBase):
-    def __init__( self, dir, add, user, pwd ):
+    def __init__( self, dir, add ):
         super().__init__()
         
         self.__dir = dir
         self.__add = add
-        self.__user = user
-        self.__pwd = pwd
 
     def do( self ):
         self.reporter.message( "Git Commit and Push: %s" % self.__dir )

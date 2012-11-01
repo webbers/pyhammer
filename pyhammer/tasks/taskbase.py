@@ -7,7 +7,7 @@ class TaskBase:
 
     def do( self ):
         pass
-    
+
     def build( self ):
         if not self.do():
             if self.failureStep is not None:

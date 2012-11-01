@@ -23,8 +23,8 @@ Builder.addTask( "copyfiles", CopyTask( srcDir, pubDir, PythonFileFilter() ) )
 Builder.addTask( "svndelete", SvnDeleteTask(repoUrl))
 Builder.addTask( "svnimport", SvnImportTask( pubDir, repoUrl ) )
 Builder.addTask( "pip-upload", CommandTask( 'python setup.py sdist upload', rootDir ) )
-Builder.addTask( "increment-rev", IncrementVersionTask(versionFile, "revision", 3))
-Builder.addTask( "increment-min", IncrementVersionTask(versionFile, "minor", 3))
+Builder.addTask( "increment-rev", IncrementVersionTask(versionFile, "revision"))
+Builder.addTask( "increment-min", IncrementVersionTask(versionFile, "minor"))
 
 #-Root tasks------------------------------------------------------------------------------------------------------------
 Builder.addTask( "ps", "unittests")

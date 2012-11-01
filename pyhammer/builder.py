@@ -1,4 +1,5 @@
 import sys
+import traceback
 from pyhammer.reporters.consolereporter import ConsoleReporter
 from pyhammer.tasks.taskbase import TaskBase
 
@@ -51,7 +52,13 @@ class Builder(TaskBase):
             Builder.reporter.message( "" )
             Builder.reporter.message( "Running '%s (%s)'" % ( stepName, stepType ) )
 
-            if not step.build():
+            try:
+                result = step.build()
+            except Exception as e:
+                Builder.reporter.failure(e)
+                result = False
+
+            if not result:
                 Builder.reporter.failure( "STEP '%s (%s)' FAILED"% ( stepName, stepType ) )
                 Builder.__buildResult = False
                 Builder.__errorCount += 1
