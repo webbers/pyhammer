@@ -14,16 +14,14 @@ Getting Started
 ---------------
 This library is meant to be a dead simple way to automate your builds. It's inspired in
 [Grunt](http://gruntjs.com/) for Javascript. There's a static class called ``Builder`` with
-two simple methods ``addTask`` and ``runBuild``
+two simple methods ``addTask`` and ``runBuild``.
 
-*  ``addTask`` works adding any object inherited from ``TaskBase`` class. The first
-parameter must be the name of task.
+The method ``addTask`` requires in it's first parameter the name of task. The second
+parameter may contain an object inherited from ``TaskBase`` or a string with the previously
+added task names separated with spaces.
 
-* The second parameter of ``addTask`` may contain an object inherited from ``TaskBase``
-or a string with the previously added task names separated with spaces
-
-*  At the end of file it's necessary put ``Builder.runBuild()``. It starts the build process
-  search for the first parameter used to call the python file.
+At the end of file it's necessary put ``Builder.runBuild()``. It starts the build process
+search for the first parameter used to call the python file.
 
 Here is a simple example:
 
