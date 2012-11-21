@@ -42,7 +42,10 @@ def execProg( FilePath, reporter, cwd = None ):
     process = subprocess.Popen( FilePath, cwd=cwd, stdout=subprocess.PIPE, startupinfo=startupinfo )
     lines = process.stdout.readlines()
     for line in lines:
-        reporter.message( line.decode('ISO 8859-1').replace('\r\n', '') )
+        try:
+            reporter.message( line.decode('UTF-8', 'ignore').replace('\r\n', '') )
+        except:
+            reporter.message('')
     return process.wait()
 
 def execProg2( FilePath, cwd = None ):
@@ -52,7 +55,10 @@ def execProg2( FilePath, cwd = None ):
     items = []
     lines = process.stdout.readlines()
     for line in lines:
-        items.append(line.decode('ISO 8859-1').replace('\r\n', ''))
+        try:
+            items.append( line.decode('UTF-8', 'ignore').replace('\r\n', '') )
+        except:
+            items.append('')
     return items
 
 def moveFile(filename1, filename2):

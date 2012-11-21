@@ -27,9 +27,9 @@ Builder.addTask( "increment-rev", IncrementVersionTask(versionFile, "revision"))
 Builder.addTask( "increment-min", IncrementVersionTask(versionFile, "minor"))
 
 #-Root tasks------------------------------------------------------------------------------------------------------------
-Builder.addTask( "ps", "unittests")
-Builder.addTask( "ci", "del-pub copyfiles svndelete svnimport del-pub")
-Builder.addTask( "publish-rev", "unittests increment-rev pip-upload")
-Builder.addTask( "publish-min", "unittests increment-min pip-upload")
+Builder.addTask( 'ps',              [ 'unittests' ] )
+Builder.addTask( 'ci',              [ 'del-pub', 'copyfiles', 'svndelete', 'svnimport', 'del-pub' ] )
+Builder.addTask( 'publish-rev',     [ 'unittests', 'increment-rev', 'pip-upload' ] )
+Builder.addTask( 'publish-min',     [ 'unittests', 'increment-min', 'pip-upload' ] )
 
 Builder.runBuild()

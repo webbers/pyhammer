@@ -11,8 +11,10 @@ class MultiTask(TaskBase):
 
     def do( self ):
         Builder.keys = Builder.steps.keys()
-
-        items = self.text.split(" ")
+        if not isinstance(self.text, list):
+            items = self.text.split(" ")
+        else:
+            items = self.text
 
         for i, stepName in enumerate( items ):
             if not Builder.build(stepName):
@@ -28,10 +30,11 @@ class Builder(TaskBase):
     reporter = ConsoleReporter()
 
     @staticmethod
-    def runBuild():
-        step = 'default'
-        if len(sys.argv) > 1:
+    def runBuild(step = None):
+        if step is None and len(sys.argv) > 1:
             step =sys.argv[1]
+        if step is None:
+            step = 'deafult'
         sys.exit(Builder.build(step)==0)
 
     @staticmethod
@@ -55,6 +58,7 @@ class Builder(TaskBase):
             try:
                 result = step.build()
             except Exception as e:
+                Builder.reporter.failure(traceback.format_exc())
                 Builder.reporter.failure(e)
                 result = False
 
@@ -73,7 +77,7 @@ class Builder(TaskBase):
 
     @staticmethod
     def addTask( name, step, ignoreFail = False ):
-        if not isinstance(step, str):
+        if not isinstance(step, str) and not isinstance(step, list):
             step.setReporter( Builder.reporter )
             step.ignoreFail = ignoreFail
         else:
