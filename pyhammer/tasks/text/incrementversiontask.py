@@ -3,10 +3,11 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class IncrementVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, type ):
+    def __init__( self, assemblyPath, type, encoding = "ISO 8859-1"):
         super().__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
+        self.__encoding = encoding;
 
     def do( self ):
         items = []
@@ -21,10 +22,16 @@ class IncrementVersionTask(TaskBase):
         return True
 
     def process( self, item ):
-        f = open(item, 'r')
-        content = f.read()
-        f.close()
-
+        
+        try:
+            f = open(item, 'r', encoding=self.__encoding)
+            content = f.read()
+        except:
+            self.reporter.failure("Can not read file: %s" % item)
+            return False
+        finally:
+            f.close()
+            
         version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
         size = 4
         if not version:
@@ -61,9 +68,14 @@ class IncrementVersionTask(TaskBase):
 
         content = content.replace(old,new)
         self.reporter.message( "Changing from version %s to %s on file %s" % ( old, new, item ) )
-
-        f = open(item, 'w')
-        f.write(content)
-        f.close()
+        
+        try:
+            f = open(item, 'w', encoding=self.__encoding)
+            content = f.write(content)
+        except:
+            self.reporter.failure("Can not write file: %s" % item)
+            return False
+        finally:
+            f.close()
 
         return True
