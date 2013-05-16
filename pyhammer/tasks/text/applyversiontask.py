@@ -34,22 +34,32 @@ class ApplyVersionTask(TaskBase):
                 self.reporter.failure("Can not found version in file: %s" % self.__assemblyPath)
                 return False
 
-        version = version.group(0)
+        major = int(version.group(1))
+        minor = int(version.group(2))
+        revis = int(version.group(3))
+
+        build = None
+        if groups == 4:
+            build = int(version.group(4))
 
         f = open(item, 'r')
         content = f.read()
         f.close()
 
-        if groups == 4:
-            oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+        oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+        if not oldVersion:
+            oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)', content )
+            groups = 3
         else:
-            if groups == 3:
-                oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)', content )
-            else:
-                self.reporter.failure("Can not found version in file: %s" % item)
-                return False
+            self.reporter.failure("Can not found version in file: %s" % item)
+            return False
 
         oldVersion = oldVersion.group(0)
+
+        version = str(major)+"."+str(minor)+"."+str(revis)
+        if groups == 4:
+            version = str(major)+"."+str(minor)+"."+str(revis)+"."+str(build)
+
 
         content = content.replace( oldVersion, version )
 
