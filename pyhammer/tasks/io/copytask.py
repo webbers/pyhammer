@@ -31,7 +31,3 @@ class CopyTask(TaskBase):
                 reporter.failure("copying %s to %s" % (fp, destPath))
                 return False
         return True
-
-
-c = CopyTask("C:\\Python33", "C:\\P")
-c.do()
