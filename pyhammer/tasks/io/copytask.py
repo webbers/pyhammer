@@ -21,6 +21,7 @@ class CopyTask(TaskBase):
         reporter.message( "Copying files: %s => %s" % ( srcDir, destDir ) )
         for fp in files:
             relPath = fp.lower().replace( os.path.realpath( srcDir ).lower(), "" )
+            relPath = fp[len(relPath)-1::]
             destPath = os.path.normpath(destDir + relPath)
             reporter.message(fp)
             if not os.path.exists(os.path.dirname(destPath)):
@@ -30,3 +31,7 @@ class CopyTask(TaskBase):
                 reporter.failure("copying %s to %s" % (fp, destPath))
                 return False
         return True
+
+
+c = CopyTask("C:\\Python33", "C:\\P")
+c.do()
