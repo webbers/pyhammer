@@ -6,12 +6,26 @@ class DeleteTask(TaskBase):
     def __init__(self, srcDir):
         super().__init__()
         self.srcDir = srcDir
-        
-    def do( self ):
-        self.reporter.message( "Deleting: %s" % self.srcDir)
-        if os.path.exists( self.srcDir ):
-            if os.path.isdir(self.srcDir):
-                shutil.rmtree(self.srcDir )
+
+    def do(self):
+        items = []
+
+        if  type(self.srcDir) is str:
+            items.append(self.srcDir)
+        else:
+            items = self.srcDir
+
+        for i, item in enumerate(items):
+            if not self.process(item):
+                return False
+
+        return True
+
+    def process( self, item ):
+        self.reporter.message( "Deleting: %s" % item)
+        if os.path.exists( item ):
+            if os.path.isdir( item):
+                shutil.rmtree( item )
             else:
-                os.remove( self.srcDir )
+                os.remove( item )
         return True
