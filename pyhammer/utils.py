@@ -48,7 +48,7 @@ def execProg( FilePath, reporter, cwd = None ):
             reporter.message('')
     return process.wait()
 
-def execProg2( FilePath, cwd = None ):
+def execProg2( FilePath, cwd = None, encoding = 'UTF-8' ):
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     process = subprocess.Popen( FilePath, cwd=cwd, stdout=subprocess.PIPE, startupinfo=startupinfo )
@@ -56,7 +56,7 @@ def execProg2( FilePath, cwd = None ):
     lines = process.stdout.readlines()
     for line in lines:
         try:
-            items.append( line.decode('UTF-8', 'ignore').replace('\r\n', '') )
+            items.append( line.decode(encoding, 'ignore').replace('\r\n', '') )
         except:
             items.append('')
     return items
