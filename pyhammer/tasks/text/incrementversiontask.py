@@ -1,13 +1,16 @@
 import re
 from pyhammer.tasks.taskbase import TaskBase
+from pyhammer.utils import execProg2
 
 class IncrementVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, type, encoding = "ISO 8859-1"):
+    def __init__( self, assemblyPath, type, encoding = "ISO 8859-1", projectRoot = '',  useSvnBuild = True):
         super().__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
-        self.__encoding = encoding;
+        self.__encoding = encoding
+        self.__useSvnBuild = useSvnBuild
+        self.__projectRoot = projectRoot
 
     def do( self ):
         items = []
@@ -58,6 +61,10 @@ class IncrementVersionTask(TaskBase):
         elif self.__type == "build":
             if build is not None:
                 build += 1
+                if self.__useSvnBuild and self.__projectRoot != '':
+                    prog = execProg2("svnversion", cwd=self.__projectRoot, encoding=self.__encoding)
+                    build = prog[0]
+                    build = build[0:len(prog)-1]
         else:
             self.reporter.failure("Version block '%s' not found on file %s" % ( self.__type, item ) )
             return False

@@ -28,6 +28,5 @@ class CopyTask(TaskBase):
 
             if not shutil.copyfile(fp, destPath):
                 reporter.failure("copying %s to %s" % (fp, destPath))
-                print("copying %s to %s" % (fp, destPath))
                 return False
         return True
