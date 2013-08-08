@@ -61,13 +61,14 @@ class IncrementVersionTask(TaskBase):
         elif self.__type == "build":
             if build is not None:
                 build += 1
-                if self.__useSvnBuild and self.__projectRoot != '':
-                    prog = execProg2("svnversion", cwd=self.__projectRoot, encoding=self.__encoding)
-                    build = prog[0]
-                    build = build[0:len(prog)-1]
         else:
             self.reporter.failure("Version block '%s' not found on file %s" % ( self.__type, item ) )
             return False
+
+        if self.__useSvnBuild and self.__projectRoot != '':
+            prog = execProg2("svnversion", cwd=self.__projectRoot, encoding=self.__encoding)
+            build = prog[0]
+            build = build[0:len(prog)-1]
 
         new = str(major) + "." + str(minor) + "." + str(revis)
         if build is not None:
