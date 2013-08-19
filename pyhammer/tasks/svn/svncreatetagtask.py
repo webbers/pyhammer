@@ -7,16 +7,17 @@ class SvnCreateTagTask(TaskBase):
     __dirTag = ""
     __versionFile = ""
 
-    def __init__( self, dirTrunk, dirTag, versionFile = None ):
+    def __init__( self, dirTrunk, dirTag, versionFile = None, encoding = "ISO 8859-1" ):
         super().__init__()
         
         self.__dirTrunk = dirTrunk
         self.__dirTag = dirTag
         self.__versionFile = versionFile
+        self.__encoding = encoding
 
     def do( self ):
         if self.__versionFile is not None:
-            f = open(self.__versionFile, 'r')
+            f = open(self.__versionFile, 'r', encoding=self.__encoding)
             content = f.read()
             f.close()
             version = re.search( '"(\d+)\.(\d+)\.(\d+)', content )
