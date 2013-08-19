@@ -14,7 +14,7 @@ pubDir = os.path.join( os.getcwd(), '../pub' )
 tempDir = os.path.join( os.getcwd(), '../temp' )
 srcDir = os.path.join( os.getcwd(), '../pyhammer' )
 versionFile = os.path.join( os.getcwd(), '../setup.py' )
-repoUrl = 'http://cronos:9090/gasrd/Web/pub/pyhammer/trunk'
+repoUrl = 'https://cronos/svn/Web/pub/pyhammer/trunk'
 
 #-Tasks-----------------------------------------------------------------------------------------------------------------
 Builder.addTask( "unittests", CommandTask('python -m unittest discover tests', rootDir) )

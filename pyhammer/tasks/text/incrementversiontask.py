@@ -4,7 +4,7 @@ from pyhammer.utils import execProg2
 
 class IncrementVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, type, encoding = "ISO 8859-1", projectRoot = '',  useSvnBuild = True):
+    def __init__( self, assemblyPath, type, encoding = "ISO-8859-1", projectRoot = '',  useSvnBuild = True):
         super().__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
