@@ -20,7 +20,7 @@ class SvnCreateTagTask(TaskBase):
             f = open(self.__versionFile, 'r', encoding=self.__encoding)
             content = f.read()
             f.close()
-            version = re.search( '(\d+)\.(\d+)\.(\d+)', content )
+            version = re.search( '[\'\"](\d+)\.(\d+)\.(\d+)', content )
             versionNumber = version.group(1) + '.' + version.group(2) + '.' + version.group(3)
             self.__dirTag = self.__dirTag + '/' + versionNumber
 
