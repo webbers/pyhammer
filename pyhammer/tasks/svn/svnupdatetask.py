@@ -5,7 +5,7 @@ class SvnUpdateTask(TaskBase):
     """Svn Update Dir Step"""
 
     def __init__( self, dir ):
-        super().__init__()
+        TaskBase().__init__()
         self.dir = dir
 
     def do( self ):

@@ -5,7 +5,7 @@ from pyhammer.utils import execProg
 
 class SvnUnversionedTask( TaskBase ):
     def __init__( self, baseDir ):
-        super().__init__()
+        TaskBase().__init__()
         self.__baseDir = baseDir
 
     def build( self ):

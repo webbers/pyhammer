@@ -5,7 +5,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class CopyTask(TaskBase):
     def __init__(self, srcDir, destDir, fileFilter=None):
-        super().__init__()
+        TaskBase().__init__()
         self.destDir = destDir
         self.srcDir = srcDir
         if fileFilter is None:

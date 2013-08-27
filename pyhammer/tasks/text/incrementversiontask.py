@@ -4,15 +4,15 @@ from pyhammer.utils import execProg2
 
 class IncrementVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, type, encoding = "ISO-8859-1", projectRoot = '',  useSvnBuild = True):
-        super().__init__()
+    def __init__(self, assemblyPath, type, encoding = "ISO-8859-1", projectRoot = '',  useSvnBuild = True):
+        TaskBase().__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
         self.__encoding = encoding
         self.__useSvnBuild = useSvnBuild
         self.__projectRoot = projectRoot
 
-    def do( self ):
+    def do(self):
         items = []
         if type(self.__assemblyPath) is str:
             items.append(self.__assemblyPath)
@@ -24,7 +24,7 @@ class IncrementVersionTask(TaskBase):
                 return False
         return True
 
-    def process( self, item ):
+    def process(self, item):
         
         try:
             f = open(item, 'r', encoding=self.__encoding)

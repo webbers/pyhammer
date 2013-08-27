@@ -6,7 +6,7 @@ from pyhammer.tasks.taskbase import TaskBase
 class MultiTask(TaskBase):
 
     def __init__( self, text ):
-        super().__init__()
+        TaskBase().__init__()
         self.text = text
 
     def do( self ):
