@@ -4,7 +4,7 @@ from pyhammer.tasks.taskbase import TaskBase
 class ApplyVersionTask(TaskBase):
 
     def __init__( self, assemblyPath, setupScriptPath ):
-        super().__init__()
+        TaskBase().__init__()
         self.__assemblyPath = assemblyPath
         self.__setupScriptPath = setupScriptPath
 

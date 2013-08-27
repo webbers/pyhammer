@@ -3,8 +3,8 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class SetVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, version ):
-        super().__init__()
+    def __init__(self, assemblyPath, version):
+        TaskBase().__init__()
         self.__assemblyPath = assemblyPath
         self.__version = version
 
@@ -15,7 +15,7 @@ class SetVersionTask(TaskBase):
         else:
             items = self.__assemblyPath
 
-        for i, item in enumerate( items ):
+        for i, item in enumerate(items):
             if not self.process(item):
                 return False
         return True
@@ -25,17 +25,17 @@ class SetVersionTask(TaskBase):
         content = f.read()
         f.close()
 
-        version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+        version = re.search('(\d+)\.(\d+)\.(\d+)\.(\d+)', content)
         if not version:
-            version = re.search( '(\d+)\.(\d+)\.(\d+)', content )
+            version = re.search('(\d+)\.(\d+)\.(\d+)', content)
             if not version:
                 self.reporter.failure("Can not found version in file: %s" % item)
                 return False
 
         old = version.group(0)
-        content = content.replace( old, self.__version )
+        content = content.replace(old, self.__version)
 
-        self.reporter.message( "Changing from version %s to %s on file %s" % ( old, self.__version, item ) )
+        self.reporter.message("Changing from version %s to %s on file %s" % ( old, self.__version, item))
 
         f = open(item, 'w')
         f.write(content)

@@ -5,7 +5,7 @@ class SvnImportTask(TaskBase):
     """Svn Commit Dir Step"""
 
     def __init__( self, dir, repo ):
-        super().__init__()
+        TaskBase().__init__()
         
         self.dir = dir
         self.repo = repo

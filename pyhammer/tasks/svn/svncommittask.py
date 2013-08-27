@@ -3,7 +3,7 @@ from pyhammer.utils import execProg
 
 class SvnCommitTask(TaskBase):
     def __init__( self, dir, add = True, user = None, pwd = None ):
-        super().__init__()
+        TaskBase().__init__()
         
         self.__dir = dir
         self.__add = add
