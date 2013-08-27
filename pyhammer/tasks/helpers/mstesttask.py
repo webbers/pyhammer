@@ -7,12 +7,8 @@ class MsTestTask(TaskBase):
 
     def __init__( self, csTestDllPath ):
         super().__init__()
-        
-        msTestPath = "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE"
-        if os.path.isdir(msTestPath) == 0:
-            msTestPath = "C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE"   
 
-        self.command = """%s\\MSTest.exe /testcontainer:%s""" % ( msTestPath, csTestDllPath )
+        self.command = """MSTest.exe /testcontainer:%s""" % ( csTestDllPath )
         self.csTestDllPath = csTestDllPath
 
     def do( self ):
