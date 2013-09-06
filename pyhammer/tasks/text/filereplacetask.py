@@ -2,7 +2,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class FileReplaceTask(TaskBase):
     def __init__( self, filename ):
-        TaskBase().__init__()
+        super(FileReplaceTask, self).__init__()
         self.__filename = filename
         self.__sentences = []
     

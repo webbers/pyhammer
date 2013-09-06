@@ -3,7 +3,7 @@ from pyhammer.utils import execProg
 
 class GitCheckoutTask(TaskBase):
     def __init__( self, branch, dir ):
-        TaskBase().__init__()
+        super(GitCheckoutTask, self).__init__()
 
         self.__branch = branch
         self.__dir = dir

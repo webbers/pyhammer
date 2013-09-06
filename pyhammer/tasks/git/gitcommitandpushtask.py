@@ -3,7 +3,7 @@ from pyhammer.utils import execProg
 
 class GitCommitAndPushTask(TaskBase):
     def __init__( self, dir, add ):
-        TaskBase().__init__()
+        super(GitCommitAndPushTask, self).__init__()
         
         self.__dir = dir
         self.__add = add

@@ -5,7 +5,7 @@ class CommandTask(TaskBase):
     """Cs UnitTest Step"""
 
     def __init__( self, command, path = None):
-        TaskBase().__init__()
+        super(CommandTask, self).__init__()
         self.path = path
         self.command = command
 

@@ -1,8 +1,8 @@
-from distutils.core import setup
+﻿from distutils.core import setup
 
 setup(
     name='pyhammer',
-    version='0.3.9',
+    version='0.3.10',
     license='MIT',
     description='Build automation library',
     author='Afonso Franca',

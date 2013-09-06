@@ -6,7 +6,7 @@ class MsTestTask(TaskBase):
     """Cs UnitTest Step"""
 
     def __init__( self, csTestDllPath ):
-        TaskBase().__init__()
+        super(MsTestTask, self).__init__()
 
         self.command = """MSTest.exe /testcontainer:%s""" % ( csTestDllPath )
         self.csTestDllPath = csTestDllPath

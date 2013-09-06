@@ -6,7 +6,7 @@ from pyhammer.tasks.taskbase import TaskBase
 class MultiTask(TaskBase):
 
     def __init__( self, text ):
-        TaskBase().__init__()
+        super(MultiTask, self).__init__()
         self.text = text
 
     def do( self ):
@@ -41,10 +41,10 @@ class Builder(TaskBase):
     def build( name = "default" ):
         steps = {}
         Builder.keys = Builder.steps.keys()
-
+		
         if any(name in k for k in Builder.keys):
             steps[name] = Builder.steps[name]
-
+            
         if len(steps) == 0:
             Builder.reporter.failure("Step \"%s\" not found" % name)
             return 0

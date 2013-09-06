@@ -1,4 +1,6 @@
 import os
+import sys
+import argparse
 from pyhammer.tasks.text.incrementversiontask import IncrementVersionTask
 from pyhammer.builder import Builder
 from pyhammer.filters.pythonfilefilter import PythonFileFilter
@@ -7,6 +9,11 @@ from pyhammer.tasks.io.copytask import CopyTask
 from pyhammer.tasks.io.deletetask import DeleteTask
 from pyhammer.tasks.svn.svndeletetask import SvnDeleteTask
 from pyhammer.tasks.svn.svnimporttask import SvnImportTask
+
+#-Argument-Parser-------------------------------------------------------------------------------------------------------
+parser = argparse.ArgumentParser()
+parser.add_argument( '--build', type=str, required=True )
+args = parser.parse_args()
 
 #-Paths-----------------------------------------------------------------------------------------------------------------
 rootDir = os.path.join( os.getcwd(), '..' )
@@ -32,4 +39,4 @@ Builder.addTask( 'ci',              [ 'del-pub', 'copyfiles', 'svndelete', 'svni
 Builder.addTask( 'publish-rev',     [ 'unittests', 'increment-rev', 'pip-upload' ] )
 Builder.addTask( 'publish-min',     [ 'unittests', 'increment-min', 'pip-upload' ] )
 
-Builder.runBuild()
+Builder.runBuild(args.build)

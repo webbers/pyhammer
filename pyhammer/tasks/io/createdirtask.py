@@ -4,7 +4,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class CreateDirTask(TaskBase):
     def __init__(self, srcDir):
-        TaskBase().__init__()
+        super(CreateDirTask, self).__init__()
         self.srcDir = srcDir
         
     def do( self ):

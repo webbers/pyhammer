@@ -8,7 +8,7 @@ class SvnCreateTagTask(TaskBase):
     __versionFile = ""
 
     def __init__( self, dirTrunk, dirTag, versionFile = None, encoding = "ISO-8859-1" ):
-        TaskBase().__init__()
+        super(SvnCreateTagTask, self).__init__()
         
         self.__dirTrunk = dirTrunk
         self.__dirTag = dirTag

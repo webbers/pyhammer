@@ -4,7 +4,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class DummyStep(TaskBase):
     def __init__(self):
-        TaskBase().__init__()
+        super(DummyStep, self).__init__()
     def do(self):
         return True
 

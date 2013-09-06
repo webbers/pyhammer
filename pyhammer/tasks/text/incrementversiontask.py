@@ -1,11 +1,12 @@
 import re
+import codecs
 from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg2
 
 class IncrementVersionTask(TaskBase):
 
     def __init__(self, assemblyPath, type, encoding = "ISO-8859-1", projectRoot = '',  useSvnBuild = True):
-        TaskBase().__init__()
+        super(IncrementVersionTask, self).__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
         self.__encoding = encoding
@@ -26,14 +27,17 @@ class IncrementVersionTask(TaskBase):
 
     def process(self, item):
         
+        f = None
         try:
-            f = open(item, 'r', encoding=self.__encoding)
+            f = codecs.open(item, 'r', encoding=self.__encoding)
             content = f.read()
-        except:
+        except IOError as e:
+            print 'Exception: \n'+e+'\n'
             self.reporter.failure("Can not read file: %s" % item)
             return False
         finally:
-            f.close()
+            if f is not None:
+                f.close()
             
         version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
         size = 4
@@ -78,7 +82,7 @@ class IncrementVersionTask(TaskBase):
         self.reporter.message( "Changing from version %s to %s on file %s" % ( old, new, item ) )
         
         try:
-            f = open(item, 'w', encoding=self.__encoding)
+            f = codecs.open(item, 'w', encoding=self.__encoding)
             content = f.write(content)
         except:
             self.reporter.failure("Can not write file: %s" % item)

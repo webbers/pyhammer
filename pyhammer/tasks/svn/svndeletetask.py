@@ -5,7 +5,7 @@ class SvnDeleteTask(TaskBase):
     """Svn Delete Step"""
 
     def __init__( self, dir, failOnError = False ):
-        TaskBase().__init__()
+        super(SvnDeleteTask, self).__init__()
         self.__dir = dir
         self.__failOnError = failOnError
 

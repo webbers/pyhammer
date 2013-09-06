@@ -4,7 +4,7 @@ from pyhammer.tasks.taskbase import TaskBase
 class TortoiseSvnCommitTask( TaskBase ):
 
     def __init__( self, path ):
-        TaskBase().__init__()
+        super(TortoiseSvnCommitTask, self).__init__()
         self.__path  = path
 
     def RunCmd( self, CmdLine, CmdDir = None ):

@@ -1,4 +1,4 @@
-class TaskBase:
+class TaskBase(object):
     def __init__(self):
         self.reporter = None
         self.data = None

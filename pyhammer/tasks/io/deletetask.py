@@ -4,7 +4,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class DeleteTask(TaskBase):
     def __init__(self, srcDir):
-        TaskBase().__init__()
+        super(DeleteTask, self).__init__()
         self.srcDir = srcDir
 
     def do(self):

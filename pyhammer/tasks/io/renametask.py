@@ -3,7 +3,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class RenameTask(TaskBase):
     def __init__(self, src, dst):
-        TaskBase().__init__()
+        super(RenameTask, self).__init__()
         self.__src = src
         self.__dst = dst
 
