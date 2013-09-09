@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyhammer.tasks.helpers.commandtask import CommandTask
 
 class InnoSetupTask( CommandTask ):

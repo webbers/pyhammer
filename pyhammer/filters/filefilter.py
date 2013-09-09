@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import fnmatch
 from pyhammer.utils import walkDir
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class TaskBase(object):
     def __init__(self):
         self.reporter = None

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 import codecs
 from pyhammer.tasks.taskbase import TaskBase
@@ -32,7 +33,6 @@ class IncrementVersionTask(TaskBase):
             f = codecs.open(item, 'r', encoding=self.__encoding)
             content = f.read()
         except IOError as e:
-            print 'Exception: \n'+e+'\n'
             self.reporter.failure("Can not read file: %s" % item)
             return False
         finally:

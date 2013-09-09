@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import re
 from pyhammer.reporters.memoryreporter import MemoryReporter
 from pyhammer.tasks.taskbase import TaskBase

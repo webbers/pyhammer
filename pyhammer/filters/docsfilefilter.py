@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyhammer.filters.filefilter import FileFilter
 
 class DocsFileFilter(FileFilter):

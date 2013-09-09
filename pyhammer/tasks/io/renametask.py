@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from pyhammer.tasks.taskbase import TaskBase
 

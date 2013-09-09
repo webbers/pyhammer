@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from pyhammer.tasks.taskbase import TaskBase
 
 class FilePutContentTask(TaskBase):
