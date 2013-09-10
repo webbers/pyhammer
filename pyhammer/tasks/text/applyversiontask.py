@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import re
+import codecs
 from pyhammer.tasks.taskbase import TaskBase
 
 class ApplyVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, setupScriptPath ):
+    def __init__( self, assemblyPath, setupScriptPath, encoding = 'UTF-8' ):
         super(ApplyVersionTask, self).__init__()
         self.__assemblyPath = assemblyPath
         self.__setupScriptPath = setupScriptPath
+        self.__encoding = encoding
 
     def do( self ):
         items = []
@@ -22,7 +24,7 @@ class ApplyVersionTask(TaskBase):
         return True
 
     def process( self, item ):
-        f = open(self.__assemblyPath, 'r')
+        f = codecs.open(self.__assemblyPath, 'r', encoding=self.__encoding)
         content = f.read()
         f.close()
 
@@ -43,17 +45,18 @@ class ApplyVersionTask(TaskBase):
         if groups == 4:
             build = int(version.group(4))
 
-        f = open(item, 'r')
+        f = codecs.open(item, 'r', encoding=self.__encoding)
         content = f.read()
         f.close()
-
+        
         oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+        
         if not oldVersion:
             oldVersion = re.search( '(\d+)\.(\d+)\.(\d+)', content )
             groups = 3
-        else:
-            self.reporter.failure("Can not found version in file: %s" % item)
-            return False
+            if not oldVersion:
+                self.reporter.failure("Can not found version in file: %s" % item)
+                return False
 
         oldVersion = oldVersion.group(0)
 
