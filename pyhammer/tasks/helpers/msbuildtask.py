@@ -9,7 +9,7 @@ class MsBuildTask(TaskBase):
         super(MsBuildTask, self).__init__()
         
         msBuildPath = "C:\\WINDOWS\\Microsoft.NET\\Framework\\%s\\msbuild.exe" % frameworkVersion
-        self.command = "\"%s\" \"%s\" /t:%s /p:Configuration=%s;OutDir=%s\\ " % ( msBuildPath, csProjectPath, target, mode, outputDir )
+        self.command = "\"%s\" \"%s\" /t:%s /p:Configuration=%s;OutDir=\"%s\"\\ " % ( msBuildPath, csProjectPath, target, mode, outputDir )
         self.csProjectPath = csProjectPath
 
     def do( self ):

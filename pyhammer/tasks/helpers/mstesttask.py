@@ -9,7 +9,7 @@ class MsTestTask(TaskBase):
     def __init__( self, csTestDllPath ):
         super(MsTestTask, self).__init__()
 
-        self.command = """MSTest.exe /testcontainer:%s""" % ( csTestDllPath )
+        self.command = """MSTest.exe /testcontainer:\"%s\"""" % ( csTestDllPath )
         self.csTestDllPath = csTestDllPath
 
     def do( self ):
