@@ -5,11 +5,12 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class ApplyVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, setupScriptPath, encoding = 'UTF-8' ):
+    def __init__( self, assemblyPath, setupScriptPath, encoding = 'ISO-8859-1', encodingSecond = 'ISO-8859-1' ):
         super(ApplyVersionTask, self).__init__()
         self.__assemblyPath = assemblyPath
         self.__setupScriptPath = setupScriptPath
         self.__encoding = encoding
+        self.__encodingSecond = encodingSecond
 
     def do( self ):
         items = []
@@ -45,7 +46,7 @@ class ApplyVersionTask(TaskBase):
         if groups == 4:
             build = int(version.group(4))
 
-        f = codecs.open(item, 'r', encoding=self.__encoding)
+        f = codecs.open(item, 'r', encoding=self.__encodingSecond)
         content = f.read()
         f.close()
         
@@ -69,8 +70,13 @@ class ApplyVersionTask(TaskBase):
 
         self.reporter.message( "Changing from version %s to %s on file %s" % ( oldVersion, version, item ) )
 
-        f = open(item, 'w')
-        f.write(content)
-        f.close()
+        try:
+            f = codecs.open(item, 'w', encoding=self.__encodingSecond)
+            f.write(content)
+        except:
+            self.reporter.failure("Can not write file: %s" % item)
+            return False
+        finally:
+            f.close()
 
         return True
