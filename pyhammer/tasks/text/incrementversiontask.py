@@ -6,7 +6,7 @@ from pyhammer.utils import execProg2
 
 class IncrementVersionTask(TaskBase):
 
-    def __init__(self, assemblyPath, type, encoding = "ISO-8859-1", projectRoot = '',  useSvnBuild = True):
+    def __init__(self, assemblyPath, type, encoding = None, projectRoot = '',  useSvnBuild = True):
         super(IncrementVersionTask, self).__init__()
         self.__assemblyPath = assemblyPath
         self.__type = type
@@ -30,7 +30,11 @@ class IncrementVersionTask(TaskBase):
         
         f = None
         try:
-            f = codecs.open(item, 'r', encoding=self.__encoding)
+            if not self.__encoding is None:
+                f = codecs.open(item, 'r', encoding=self.__encoding)
+            else:
+                f = open(item, 'r')
+                
             content = f.read()
         except IOError as e:
             self.reporter.failure("Can not read file: %s" % item)
@@ -70,7 +74,7 @@ class IncrementVersionTask(TaskBase):
             return False
 
         if self.__useSvnBuild and self.__projectRoot != '':
-            prog = execProg2("svnversion", cwd=self.__projectRoot, encoding=self.__encoding)
+            prog = execProg2("svnversion", cwd=self.__projectRoot)
             build = prog[0]
             build = build[0:len(prog)-1]
 
@@ -82,8 +86,12 @@ class IncrementVersionTask(TaskBase):
         self.reporter.message( "Changing from version %s to %s on file %s" % ( old, new, item ) )
         
         try:
-            f = codecs.open(item, 'w', encoding=self.__encoding)
-            content = f.write(content)
+            if not self.__encodingSecond is None:
+                f = codecs.open(item, 'w', encoding=self.__encoding)
+                f.write(content)
+            else:
+                f = open(item, 'w')
+                print >> f, content
         except:
             self.reporter.failure("Can not write file: %s" % item)
             return False

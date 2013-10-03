@@ -5,7 +5,7 @@ from pyhammer.tasks.taskbase import TaskBase
 
 class ApplyVersionTask(TaskBase):
 
-    def __init__( self, assemblyPath, setupScriptPath, encoding = 'ISO-8859-1', encodingSecond = 'ISO-8859-1' ):
+    def __init__( self, assemblyPath, setupScriptPath, encoding=None, encodingSecond=None):
         super(ApplyVersionTask, self).__init__()
         self.__assemblyPath = assemblyPath
         self.__setupScriptPath = setupScriptPath
@@ -25,7 +25,12 @@ class ApplyVersionTask(TaskBase):
         return True
 
     def process( self, item ):
-        f = codecs.open(self.__assemblyPath, 'r', encoding=self.__encoding)
+        f = None
+        if not self.__encoding is None:
+            f = codecs.open(self.__assemblyPath, 'r', encoding=self.__encoding)
+        else:
+            f = open(self.__assemblyPath, 'r')
+            
         content = f.read()
         f.close()
 
@@ -46,7 +51,11 @@ class ApplyVersionTask(TaskBase):
         if groups == 4:
             build = int(version.group(4))
 
-        f = codecs.open(item, 'r', encoding=self.__encodingSecond)
+        if not self.__encodingSecond is None:
+            f = codecs.open(item, 'r', encoding=self.__encodingSecond)
+        else:
+            f = open(item, 'r')
+        
         content = f.read()
         f.close()
         
@@ -70,9 +79,14 @@ class ApplyVersionTask(TaskBase):
 
         self.reporter.message( "Changing from version %s to %s on file %s" % ( oldVersion, version, item ) )
 
-        try:
-            f = codecs.open(item, 'w', encoding=self.__encodingSecond)
-            f.write(content)
+        try:        
+            if not self.__encodingSecond is None:
+                f = codecs.open(item, 'w', encoding=self.__encodingSecond)
+                f.write(content)
+            else:
+                f = open(item, 'w')
+                print >> f, content
+            
         except:
             self.reporter.failure("Can not write file: %s" % item)
             return False
