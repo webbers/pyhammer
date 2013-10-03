@@ -81,8 +81,6 @@ class IncrementVersionTask(TaskBase):
                 build = build[1]
             else:
                 build = build[0]
-            
-            print build
             if build[len(build)-1] == 'M' or build[len(build)-1] == 'S' or build[len(build)-1] == 'P':
                 build = build[0:len(build)-1]
 
