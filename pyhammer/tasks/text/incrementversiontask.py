@@ -77,7 +77,7 @@ class IncrementVersionTask(TaskBase):
             prog = execProg2("svnversion", cwd=self.__projectRoot)
             build = prog[0]
             build = build.split(':')
-            if len(build) > 0:
+            if len(build) > 1:
                 build = build[1]
             else:
                 build = build[0]
