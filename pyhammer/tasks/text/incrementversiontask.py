@@ -76,7 +76,14 @@ class IncrementVersionTask(TaskBase):
         if self.__useSvnBuild and self.__projectRoot != '':
             prog = execProg2("svnversion", cwd=self.__projectRoot)
             build = prog[0]
-            if build[len(build)-1] == 'M':
+            build = build.split(':')
+            if len(build) > 0:
+                build = build[1]
+            else:
+                build = build[0]
+            
+            print build
+            if build[len(build)-1] == 'M' or build[len(build)-1] == 'S' or build[len(build)-1] == 'P':
                 build = build[0:len(build)-1]
 
         new = str(major) + "." + str(minor) + "." + str(revis)
