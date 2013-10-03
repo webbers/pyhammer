@@ -86,13 +86,14 @@ class IncrementVersionTask(TaskBase):
         self.reporter.message( "Changing from version %s to %s on file %s" % ( old, new, item ) )
         
         try:
-            if not self.__encodingSecond is None:
+            if not self.__encoding is None:
                 f = codecs.open(item, 'w', encoding=self.__encoding)
                 f.write(content)
             else:
                 f = open(item, 'w')
                 print >> f, content
-        except:
+        except IOError as e:
+            self.reporter.message(e)
             self.reporter.failure("Can not write file: %s" % item)
             return False
         finally:
