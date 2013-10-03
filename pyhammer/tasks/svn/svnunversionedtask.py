@@ -11,7 +11,7 @@ class SvnUnversionedTask( TaskBase ):
 
     def build( self ):
         br = MemoryReporter()
-        execProg( "svn status " + self.__baseDir, br, self.__baseDir )
+        execProg( "svn status --non-interactive --trust-server-cert " + self.__baseDir, br, self.__baseDir )
         
         files = re.findall('\?\s+([^\n]+)\n', br.getText() )
         for file in files:

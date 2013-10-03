@@ -27,12 +27,12 @@ class SvnCommitTask(TaskBase):
         self.reporter.message( "COMMIT: %s" % item )
         addResult = True
         if self.__add:
-            command = "svn add --force *.*"
+            command = "svn add --non-interactive --trust-server-cert --force *.*"
             addResult = execProg( command, self.reporter, item ) == 0
 
         if addResult :
             commitMessage = "Commited by Build"
-            command = "svn commit -m \"%s\"" % commitMessage
+            command = "svn commit --non-interactive --trust-server-cert -m \"%s\"" % commitMessage
 
             if self.__user:
                 command += " --username %s --password %s" % (self.__user, self.__pwd)

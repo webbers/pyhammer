@@ -28,7 +28,7 @@ class SvnCreateTagTask(TaskBase):
         self.reporter.message( "TRUNK DIR: %s" % self.__dirTrunk )
         self.reporter.message( "TAG DIR: %s" % self.__dirTag )
         commitMessage = "Created by Build"
-        command = 'svn copy "' + self.__dirTrunk + '" "' + self.__dirTag + '" -m \"'+commitMessage+'\"'
+        command = 'svn copy --non-interactive --trust-server-cert "' + self.__dirTrunk + '" "' + self.__dirTag + '" -m \"'+commitMessage+'\"'
 
         self.reporter.message( "COMMAND: %s" % command )
         

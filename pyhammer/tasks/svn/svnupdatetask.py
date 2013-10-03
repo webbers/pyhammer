@@ -11,4 +11,4 @@ class SvnUpdateTask(TaskBase):
 
     def do( self ):
         self.reporter.message( "SVN UPDATE DIR: %s" % self.dir )
-        return execProg( "svn update", self.reporter, self.dir ) == 0
+        return execProg( "svn update --non-interactive --trust-server-cert", self.reporter, self.dir ) == 0

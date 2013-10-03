@@ -21,7 +21,7 @@ class SvnDeleteTask(TaskBase):
                 return 1
 
         for path in items:
-            command = "svn delete --force \"%s\" -m \"Build\"" % (self.__dir + "/" + path)
+            command = "svn delete --non-interactive --trust-server-cert --force \"%s\" -m \"Build\"" % (self.__dir + "/" + path)
             self.reporter.message(command)
             execProg( command, self.reporter ) == 0
         return 1
