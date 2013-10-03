@@ -85,9 +85,9 @@ class ApplyVersionTask(TaskBase):
                 f.write(content)
             else:
                 f = open(item, 'w')
-                print >> f, content
-            
-        except:
+                f.write(content)
+        except IOError as e:
+            self.reporter.message(e)
             self.reporter.failure("Can not write file: %s" % item)
             return False
         finally:
