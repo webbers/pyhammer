@@ -70,7 +70,7 @@ def moveFile(filename1, filename2):
     return False
 
 def svnList(path, reporter):
-    items = execProg2('svn list ' + path)
+    items = execProg2('svn list --non-interactive --trust-server-cert ' + path)
 
     if isList(items):
         return items

@@ -8,20 +8,26 @@ class SvnCreateTagTask(TaskBase):
     __dirTag = ""
     __versionFile = ""
 
-    def __init__( self, dirTrunk, dirTag, versionFile = None, encoding = "ISO-8859-1" ):
+    def __init__( self, dirTrunk, dirTag, versionFile = None, includeRevision = False, encoding = "ISO-8859-1" ):
         super(SvnCreateTagTask, self).__init__()
         
         self.__dirTrunk = dirTrunk
         self.__dirTag = dirTag
         self.__versionFile = versionFile
         self.__encoding = encoding
+        self.__includeRevision = includeRevision
 
     def do( self ):
         if self.__versionFile is not None:
             f = open(self.__versionFile, 'r', encoding=self.__encoding)
             content = f.read()
             f.close()
-            version = re.search( '[\'\"](\d+)\.(\d+)\.(\d+)', content )
+            version = None
+            if self.__includeRevision is False:
+                version = re.search( '[\'\"](\d+)\.(\d+)\.(\d+)', content )
+            else:
+                version = re.search( '[\'\"](\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+                
             versionNumber = version.group(1) + '.' + version.group(2) + '.' + version.group(3)
             self.__dirTag = self.__dirTag + '/' + versionNumber
 
