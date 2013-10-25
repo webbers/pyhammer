@@ -73,7 +73,7 @@ class IncrementVersionTask(TaskBase):
             self.reporter.failure("Version block '%s' not found on file %s" % ( self.__type, item ) )
             return False
 
-        if self.__useSvnBuild and self.__projectRoot != '':
+        if self.__useSvnBuild and self.__projectRoot != '' and size == 4:
             prog = execProg2("svnversion", cwd=self.__projectRoot)
             build = prog[0]
             build = build.split(':')
