@@ -6,7 +6,7 @@ class NUnitTestTaskX86(TaskBase):
     """NUnit Test Run Step"""
 
     def __init__( self, csTestDllPath ):
-        super(NUnitTestTask, self).__init__()
+        super(NUnitTestTaskX86, self).__init__()
 
         self.command = """nunit-console-x86 \"%s\"""" % ( csTestDllPath )
         self.csTestDllPath = csTestDllPath
