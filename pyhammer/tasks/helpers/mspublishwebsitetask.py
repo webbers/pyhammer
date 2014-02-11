@@ -8,7 +8,7 @@ class MsPublishWebsiteTask(TaskBase):
     def __init__( self, csProjectPath, publishProfile, frameworkVersion = "v4.0.30319" ):
         super(MsPublishWebsiteTask, self).__init__()
         
-        msBuildPath = "C:\\WINDOWS\\Microsoft.NET\\Framework\\%s\\msbuild.exe" % frameworkVersion
+        msBuildPath = "msbuild.exe" % frameworkVersion
         self.command = "\"%s\" \"%s\" /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=%s " % ( msBuildPath, csProjectPath, publishProfile)
         self.csProjectPath = csProjectPath
 
