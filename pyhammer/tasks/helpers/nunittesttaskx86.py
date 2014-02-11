@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
