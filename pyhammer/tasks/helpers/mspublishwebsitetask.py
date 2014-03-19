@@ -5,11 +5,11 @@ from pyhammer.utils import execProg
 class MsPublishWebsiteTask(TaskBase):
     """Cs Project Build Step"""
 
-    def __init__( self, csProjectPath, publishProfile ):
+    def __init__( self, csProjectPath, publishProfile, visualStudioVersion = "12.0" ):
         super(MsPublishWebsiteTask, self).__init__()
         
         msBuildPath = "msbuild.exe"
-        self.command = "\"%s\" \"%s\" /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=%s " % ( msBuildPath, csProjectPath, publishProfile)
+        self.command = "\"%s\" \"%s\" /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=%s /p:VisualStudioVersion=%s " % ( msBuildPath, csProjectPath, publishProfile, visualStudioVersion)
         self.csProjectPath = csProjectPath
 
     def do( self ):
