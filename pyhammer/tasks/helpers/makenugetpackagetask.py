@@ -20,11 +20,11 @@ class MakeNugetPackageTask(TaskBase):
     def do( self ):
         self.reporter.message( "MAKING NUGET PACKAGE FROM: %s" % ntpath.basename(self.csProjectPath) )
 
-        result = execProg("msbuild.exe \"%s\" /t:Rebuild /p:Configuration=Release;VisualStudioVersion=%s;SolutionDir=%s " % ( self.csProjectPath, self.visualStudioVersion, self.solutionDir ), self.reporter)
+        result = execProg("msbuild.exe \"%s\" /t:Rebuild /p:Configuration=Release;VisualStudioVersion=%s" % ( self.csProjectPath, self.visualStudioVersion ), self.reporter, self.solutionDir)
         if(not result == 0):
             return False
 
-        result = execProg("nuget.exe pack \"%s\" -prop Configuration=Release -OutputDirectory \"%s\"" % (self.csProjectPath, self.tempDir), self.reporter)
+        result = execProg("nuget.exe pack \"%s\" -IncludeReferencedProjects -prop Configuration=Release -OutputDirectory \"%s\"" % (self.csProjectPath, self.tempDir), self.reporter)
         if(not result == 0):
             return False
 
