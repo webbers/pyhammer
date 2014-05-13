@@ -65,9 +65,9 @@ class Builder(TaskBase):
 
             if not result:
                 Builder.reporter.failure( "STEP '%s (%s)' FAILED"% ( stepName, stepType ) )
-                Builder.__buildResult = False
                 Builder.__errorCount += 1
                 if not step.ignoreFail:
+                    Builder.__buildResult = False
                     Builder.reporter.failure( "BUILD FAILED" )
                     return False
         
