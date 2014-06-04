@@ -9,11 +9,11 @@ class VsTestTask(TaskBase):
     def __init__( self, csProjectPath ):
         super(VsTestTask, self).__init__()
         
-        vsTestPath = "vstest.console.exe"
-        self.command = "\"%s\" \"%s\"" % ( vsTestPath, csProjectPath )
+        self.command = """vstest.console.exe \"%s\"""" % ( csProjectPath )
         self.csProjectPath = csProjectPath
-        self.workingDir = os.path.dirname(csProjectPath)
 
     def do( self ):
+        self.reporter.message( self.command )
+        self.reporter.message( self.csProjectPath )
         self.reporter.message( "BUILD CS PROJECT: %s" % self.csProjectPath )
-        return execProg( self.command, self.reporter, self.workingDir ) == 0
+        return execProg( self.command, self.reporter, os.path.dirname(self.csProjectPath) ) == 0
