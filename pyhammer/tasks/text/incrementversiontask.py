@@ -36,17 +36,17 @@ class IncrementVersionTask(TaskBase):
                 f = open(item, 'r')
                 
             content = f.read()
-        except IOError as e:
+        except IOError:
             self.reporter.failure("Can not read file: %s" % item)
             return False
         finally:
             if f is not None:
                 f.close()
             
-        version = re.search( '(\d+)\.(\d+)\.(\d+)\.(\d+)', content )
+        version = re.search('(\d+)\.(\d+)\.(\d+)\.(\d+)', content)
         size = 4
         if not version:
-            version = re.search( '(\d+)\.(\d+)\.(\d+)', content )
+            version = re.search('(\d+)\.(\d+)\.(\d+)', content)
             size = 3
             if not version:
                 self.reporter.failure("Can not found version in file: %s" % item)
@@ -70,10 +70,10 @@ class IncrementVersionTask(TaskBase):
             if build is not None:
                 build += 1
         else:
-            self.reporter.failure("Version block '%s' not found on file %s" % ( self.__type, item ) )
+            self.reporter.failure("Version block '%s' not found on file %s" % ( self.__type, item))
             return False
 
-        if self.__useSvnBuild and self.__projectRoot != '' and size == 4:
+        if self.__useSvnBuild and self.__projectRoot != '':
             prog = execProg2("svnversion", cwd=self.__projectRoot)
             build = prog[0]
             build = build.split(':')
@@ -88,8 +88,8 @@ class IncrementVersionTask(TaskBase):
         if build is not None:
             new += "." + str(build)
 
-        content = content.replace(old,new)
-        self.reporter.message( "Changing from version %s to %s on file %s" % ( old, new, item ) )
+        content = content.replace(old, new)
+        self.reporter.message("Changing from version %s to %s on file %s" % (old, new, item))
         
         try:
             if not self.__encoding is None:
