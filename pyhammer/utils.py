@@ -5,6 +5,12 @@ import subprocess
 import fnmatch
 import sys
 
+def _isDirectory(pattern):
+    result = False
+    if pattern.index('\\') > 0:
+        result = True
+    return result
+
 def walkDir( root, recursive=0, pattern='*', return_folders=0 ):
     # initialize
     result = []
@@ -22,6 +28,9 @@ def walkDir( root, recursive=0, pattern='*', return_folders=0 ):
     # check each file
     for name in names:
         fullname = os.path.normpath(os.path.join(root, name))
+
+        if _isDirectory(pattern):
+            name = fullname
 
         # grab if it matches our pattern and entry type
         for pat in pat_list:

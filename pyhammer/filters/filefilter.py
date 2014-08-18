@@ -7,12 +7,13 @@ class FileFilter:
     __include = []
     __exclude = []
 
-    def __init__( self, include = None, exclude = None ):
+    def __init__( self, include = None, exclude = None, folderPattern = None ):
         self.__include = include
         self.__exclude = exclude
+        self.__folderPattern = folderPattern
 
-    def Filter( self, dir, recurvise = True ):
-        files = walkDir( dir, recurvise )
+    def Filter( self, dir, recurvise = True):
+        files = walkDir( dir, recurvise, self.__folderPattern )
         filteredFiles = []
         for filePath in files:
             if self.__isValidFile( filePath, dir ):
