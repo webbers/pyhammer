@@ -7,7 +7,7 @@ import sys
 
 def _isDirectory(pattern):
     result = False
-    if pattern.index('\\') > 0:
+    if pattern in '\\':
         result = True
     return result
 

@@ -34,5 +34,6 @@ class MsTestTask(TaskBase):
             self.reporter.message( "RUN CS UNITTEST: %s" % comm[1] )
             print(comm)
             result = execProg(comm[0], self.reporter, os.path.dirname(comm[1])) == 0
-
+            if not result:
+                break;
         return result
