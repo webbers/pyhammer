@@ -6,7 +6,7 @@ from pyhammer.utils import execProg
 class MsBuildTask(TaskBase):
     """Cs Project Build Step"""
 
-    def __init__( self, csProjectPath, outputDir, target = "Rebuild", mode = "Release", visualStudioVersion = "12.0" ):
+    def __init__( self, csProjectPath, outputDir = '', target = "Rebuild", mode = "Release", visualStudioVersion = "12.0" ):
         super(MsBuildTask, self).__init__()
         
         msBuildPath = "msbuild.exe"
