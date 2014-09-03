@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='pyhammer',
-    version='0.5.3',
+    version='0.5.4',
     license='MIT',
     description='Build automation library',
     author='Afonso Franca',

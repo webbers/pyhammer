@@ -11,7 +11,7 @@ class MsBuildTask(TaskBase):
         
         msBuildPath = "msbuild.exe"
 
-        self.command = "\"%s\" \"%s\" /t:%s /property:Configuration=%s;VisualStudioVersion=%s " % \
+        self.command = "\"%s\" \"%s\" /t:%s /property:Configuration=%s;VisualStudioVersion=%s" % \
                        (msBuildPath, csProjectPath, target, mode, visualStudioVersion)
 
         if outputDir is not None and outputDir != '':
