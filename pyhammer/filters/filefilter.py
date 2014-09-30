@@ -33,7 +33,7 @@ class FileFilter:
 
         if self.__exclude is not None:
             for pattern in self.__exclude:
-                valid = not fnmatch.fnmatch( filePath, pattern )
+                valid = fnmatch.fnmatch( filePath, pattern )
                 if not valid:
                     break
 
