@@ -6,11 +6,11 @@ from pyhammer.utils import execProg
 class MsTestTask(TaskBase):
     """Cs UnitTest Step"""
 
-    def __init__( self, csTestDllPath, testSettingsPath = None ):
+    def __init__( self, csTestDllPath, testSettingsPath = "" ):
         super(MsTestTask, self).__init__()
         self.command = []
 
-        if testSettingsPath is not None:
+        if testSettingsPath != "":
             testSettingsCommand = "/testsettings: \"%s\"" % testSettingsPath
 
         if type(csTestDllPath) == str:
