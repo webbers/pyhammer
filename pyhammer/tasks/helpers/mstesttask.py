@@ -10,6 +10,7 @@ class MsTestTask(TaskBase):
         super(MsTestTask, self).__init__()
         self.command = []
 
+        testSettingsCommand = ""
         if testSettingsPath != "":
             testSettingsCommand = "/testsettings: \"%s\"" % testSettingsPath
 
