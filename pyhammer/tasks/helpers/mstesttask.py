@@ -6,17 +6,20 @@ from pyhammer.utils import execProg
 class MsTestTask(TaskBase):
     """Cs UnitTest Step"""
 
-    def __init__( self, csTestDllPath ):
+    def __init__( self, csTestDllPath, testSettingsPath = None ):
         super(MsTestTask, self).__init__()
         self.command = []
 
+        if testSettingsPath is not None:
+            testSettingsCommand = "/testsettings: \"%s\"" % testSettingsPath
+
         if type(csTestDllPath) == str:
-            self.command.append(["""MSTest.exe /testcontainer:\"%s\"""" % ( csTestDllPath ), csTestDllPath])
+            self.command.append(["""MSTest.exe /testcontainer:\"%s\" %s""" % ( csTestDllPath, testSettingsCommand ), csTestDllPath])
         else:
             files = [file for file in csTestDllPath if os.path.splitext(file)[1] == '.dll']
 
             for dllTestPath in files:
-                self.command.append(["""MSTest.exe /testcontainer:\"%s\"""" % ( dllTestPath ), dllTestPath])
+                self.command.append(["""MSTest.exe /testcontainer:\"%s\" %s""" % ( dllTestPath, testSettingsCommand ), dllTestPath])
 
         self.csTestDllPath = csTestDllPath
 
