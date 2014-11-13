@@ -22,24 +22,30 @@ class SetVersionTask(TaskBase):
         return True
 
     def process( self, item ):
-        f = open(item, 'r')
-        content = f.read()
-        f.close()
 
-        version = re.search('(\d+)\.(\d+)\.(\d+)\.(\d+)', content)
+        version = re.search('(\d+)\.(\d+)\.(\d+)\.(\d+)', self.__version)
         if not version:
-            version = re.search('(\d+)\.(\d+)\.(\d+)', content)
+            version = re.search('(\d+)\.(\d+)\.(\d+)', self.__version)
+
+        if version:
+            f = open(item, 'r')
+            content = f.read()
+            f.close()
+
+            version = re.search('(\d+)\.(\d+)\.(\d+)\.(\d+)', content)
             if not version:
-                self.reporter.failure("Can not found version in file: %s" % item)
-                return False
+                version = re.search('(\d+)\.(\d+)\.(\d+)', content)
+                if not version:
+                    self.reporter.failure("Can not found version in file: %s" % item)
+                    return False
 
-        old = version.group(0)
-        content = content.replace(old, self.__version)
+            old = version.group(0)
+            content = content.replace(old, self.__version)
 
-        self.reporter.message("Changing from version %s to %s on file %s" % ( old, self.__version, item))
+            self.reporter.message("Changing from version %s to %s on file %s" % ( old, self.__version, item))
 
-        f = open(item, 'w')
-        f.write(content)
-        f.close()
+            f = open(item, 'w')
+            f.write(content)
+            f.close()
 
         return True
