@@ -12,7 +12,7 @@ class MsTestTask(TaskBase):
 
         testSettingsCommand = ""
         if testSettingsPath != "":
-            testSettingsCommand = "/testsettings: \"%s\"" % testSettingsPath
+            testSettingsCommand = "/testsettings:\"%s\"" % testSettingsPath
 
         if type(csTestDllPath) == str:
             self.command.append(["""MSTest.exe /testcontainer:\"%s\" %s""" % ( csTestDllPath, testSettingsCommand ), csTestDllPath])
