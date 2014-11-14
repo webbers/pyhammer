@@ -25,16 +25,17 @@ class FileFilter:
 
         valid = True
 
+        if self.__exclude is not None:
+            for pattern in self.__exclude:
+                valid = fnmatch.fnmatch( filePath, pattern )
+                if valid:
+                    return False
+                    break
+
         if self.__include is not None:
             for pattern in self.__include:
                 valid = fnmatch.fnmatch( filePath, pattern )
                 if valid:
-                    break
-
-        if self.__exclude is not None:
-            for pattern in self.__exclude:
-                valid = not fnmatch.fnmatch( filePath, pattern )
-                if not valid:
                     break
 
         return valid
