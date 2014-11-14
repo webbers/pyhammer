@@ -34,7 +34,7 @@ def walkDir( root, recursive=0, pattern='*', return_folders=0 ):
 
         # grab if it matches our pattern and entry type
         for pat in pat_list:
-            if fnmatch.fnmatch(name, pat):
+            if fnmatch.fnmatch(fullname, pat):
                 if os.path.isfile(fullname) or (return_folders and os.path.isdir(fullname)):
                     result.append(fullname)
                 continue
