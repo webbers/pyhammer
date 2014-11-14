@@ -36,6 +36,7 @@ class FileFilter:
             for pattern in self.__include:
                 valid = fnmatch.fnmatch( filePath, pattern )
                 if valid:
+                    return True
                     break
 
         return valid
