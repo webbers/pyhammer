@@ -23,15 +23,14 @@ class FileFilter:
     def __isValidFile( self, filePath, baseDir ):
         filePath = filePath.lower().replace( baseDir.lower(), '' )
 
-        valid = True
-
         if self.__exclude is not None:
             for pattern in self.__exclude:
-                valid = fnmatch.fnmatch( filePath, pattern )
-                if valid:
+                temp = fnmatch.fnmatch( filePath, pattern )
+                if temp:
                     return False
                     break
 
+        valid = True
         if self.__include is not None:
             for pattern in self.__include:
                 valid = fnmatch.fnmatch( filePath, pattern )
