@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 import os
+from pyhammer.filters.mstestfilefilter import MsTestFileFilter
 from pyhammer.tasks.taskbase import TaskBase
 from pyhammer.utils import execProg
 
 class MsTestTask(TaskBase):
     """Cs UnitTest Step"""
 
-    def __init__( self, csTestDllPath, testSettingsPath = "" ):
+    def __init__( self, csTestDllPath = "", testSettingsPath = "", baseDir = "", buildMode = "", exclude = []):
         super(MsTestTask, self).__init__()
         self.command = []
 
         testSettingsCommand = ""
         if testSettingsPath != "":
             testSettingsCommand = "/testsettings:\"%s\"" % testSettingsPath
+
+        if len(csTestDllPath) == 0 and len(baseDir) != 0:
+            csTestDllPath = MsTestFileFilter(buildMode, exclude).Filter(baseDir)
 
         if type(csTestDllPath) == str:
             self.command.append(["""MSTest.exe /testcontainer:\"%s\" %s""" % ( csTestDllPath, testSettingsCommand ), csTestDllPath])
