@@ -18,10 +18,10 @@ class ZipTask(TaskBase):
         self.__dirName = dir
         self.__zipName = zipname
         self.__exclude = exclude
+        
+    def do(self):
         self.__zf = zipfile.ZipFile(self.__zipName, 'w', zipfile.ZIP_DEFLATED)
         self.__fileFilter = FileFilter(exclude=self.__exclude).Filter(self.__dirName)
-
-    def do(self):
         rootlen = len(self.__dirName) + 1
 
         for item in self.__fileFilter:
