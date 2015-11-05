@@ -84,6 +84,9 @@ class IncrementVersionTask(TaskBase):
             if build[len(build)-1] == 'M' or build[len(build)-1] == 'S' or build[len(build)-1] == 'P':
                 build = build[0:len(build)-1]
 
+            if build >= 65000:
+                build -= 60000
+
         new = str(major) + "." + str(minor) + "." + str(revis)
         if build is not None:
             new += "." + str(build)
